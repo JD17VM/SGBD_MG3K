@@ -1,0 +1,2 @@
+estudiantes#nombre#str#id#int#dept#str
+depts#nombre#str#oficina#str
