@@ -125,8 +125,7 @@ void mostrarRelacion(const Relacion &relacion){
     }
 }
 
-void SELECT_ALL_FROM(string nombre_tabla){
-    vector<Relacion> relaciones = leerEsquema("esquema.txt");
+void SELECT_ALL_FROM(vector<Relacion> &relaciones,string nombre_tabla){
     for (Relacion &relacion : relaciones){
         if(relacion.nombre == nombre_tabla){
             string archivoDatos = relacion.nombre + ".txt";
@@ -137,22 +136,10 @@ void SELECT_ALL_FROM(string nombre_tabla){
 }
 
 int main(){
-    ////Leer el esquema de la base de datos
-    //vector<Relacion> relaciones = leerEsquema("esquema.txt");
 
-    //// Leer los datos de las relaciones
-    //for (Relacion &relacion : relaciones){
-    //    string archivoDatos = relacion.nombre + ".txt"; // Modificación en la ruta del archivo de datos
-    //    //cout << "Ruta del archivo de datos: " << archivoDatos << endl; // Impresión de depuración
-    //    leerDatosRelacion(relacion, archivoDatos);
-    //}
-
-    // Mostrar las relaciones en la consola
-    //for (const Relacion &relacion : relaciones){
-    //    mostrarRelacion(relacion);
-    //}
-
-    SELECT_ALL_FROM("estudiantes");
+    vector<Relacion> relaciones = leerEsquema("esquema.txt");
+    SELECT_ALL_FROM(relaciones, "estudiantes");
+    SELECT_ALL_FROM(relaciones, "depts");
 
     return 0;
 }
