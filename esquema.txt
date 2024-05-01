@@ -1,2 +1,3 @@
 estudiantes#nombre#str#id#int#dept#str
 depts#nombre#str#oficina#str
+amigos#nombre#str#apellido_1#str#apellido_2#str#apellido_3#str
