@@ -43,7 +43,7 @@ vector<Relacion> leerEsquema(string archivoEsquema){
     if (archivo.is_open()){
         string linea;
         while (getline(archivo, linea)){
-            cout << "Leyendo linea del esquema: " << linea << endl; // Impresión de depuración
+            //cout << "Leyendo linea del esquema: " << linea << endl; // Impresión de depuración
             // Resto del código para leer el esquema...
 
             // Extraer información de la línea del esquema
@@ -81,7 +81,7 @@ void leerDatosRelacion(Relacion &relacion, string archivoDatos){
     if (archivo.is_open()){
         string linea;
         while (getline(archivo, linea)){
-            cout << "Leyendo linea de datos: " << linea << endl;
+            //cout << "Leyendo linea de datos: " << linea << endl;
 
             // Extraer valores de la línea de datos
             vector<string> valores = split(linea, '#');
@@ -125,21 +125,34 @@ void mostrarRelacion(const Relacion &relacion){
     }
 }
 
-int main(){
-    //Leer el esquema de la base de datos
+void SELECT_ALL_FROM(string nombre_tabla){
     vector<Relacion> relaciones = leerEsquema("esquema.txt");
-
-    // Leer los datos de las relaciones
     for (Relacion &relacion : relaciones){
-        string archivoDatos = relacion.nombre + ".txt"; // Modificación en la ruta del archivo de datos
-        cout << "Ruta del archivo de datos: " << archivoDatos << endl; // Impresión de depuración
-        leerDatosRelacion(relacion, archivoDatos);
+        if(relacion.nombre == nombre_tabla){
+            string archivoDatos = relacion.nombre + ".txt";
+            leerDatosRelacion(relacion, archivoDatos);
+            mostrarRelacion(relacion);
+        }
     }
+}
 
-     // Mostrar las relaciones en la consola
-    for (const Relacion &relacion : relaciones){
-        mostrarRelacion(relacion);
-    }
+int main(){
+    ////Leer el esquema de la base de datos
+    //vector<Relacion> relaciones = leerEsquema("esquema.txt");
+
+    //// Leer los datos de las relaciones
+    //for (Relacion &relacion : relaciones){
+    //    string archivoDatos = relacion.nombre + ".txt"; // Modificación en la ruta del archivo de datos
+    //    //cout << "Ruta del archivo de datos: " << archivoDatos << endl; // Impresión de depuración
+    //    leerDatosRelacion(relacion, archivoDatos);
+    //}
+
+    // Mostrar las relaciones en la consola
+    //for (const Relacion &relacion : relaciones){
+    //    mostrarRelacion(relacion);
+    //}
+
+    SELECT_ALL_FROM("estudiantes");
 
     return 0;
 }
