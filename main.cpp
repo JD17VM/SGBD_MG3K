@@ -11,7 +11,7 @@ struct Tupla{
 };
 
 // Estructura para representar una relación
-struct Relacion{
+struct Tabla{
     string nombre;
     vector<string> atributos;
     vector<Tupla> tuplas;
@@ -36,8 +36,8 @@ vector<string> split(const string &str, const char delimiter){
 
 //Recibe un texto que es el nombre del archivo txt "esquema.txt"
 //Retorna el vector de todas las Tablas del esquema (Relacion) sólo con los nombres de las tablas y los nombres de columnas
-vector<Relacion> leerEsquema(string archivoEsquema){
-    vector<Relacion> relaciones;
+vector<Tabla> leerEsquema(string archivoEsquema){
+    vector<Tabla> relaciones;
     ifstream archivo(archivoEsquema);
 
     if (archivo.is_open()){
@@ -58,7 +58,7 @@ vector<Relacion> leerEsquema(string archivoEsquema){
             }
 
             // Crear una nueva relación y agregarla al vector
-            Relacion relacion;
+            Tabla relacion;
             relacion.nombre = nombreRelacion;
             relacion.atributos = atributosRelacion;
             relaciones.push_back(relacion);
@@ -75,7 +75,7 @@ vector<Relacion> leerEsquema(string archivoEsquema){
 
 //Recibe una Tabla (Relacion) y con su nombre y atributos (nombres de columnas) y el nombre del archivo txt de los registros
 //Llena la Tabla (Relacion) con los registros correspondientes de el mismo archivo
-void leerDatosRelacion(Relacion &relacion, string archivoDatos){
+void leerDatosRelacion(Tabla &relacion, string archivoDatos){
     ifstream archivo(archivoDatos);
 
     if (archivo.is_open()){
@@ -104,7 +104,7 @@ void leerDatosRelacion(Relacion &relacion, string archivoDatos){
 
 //Recibe una Tabla completa (relacion) con sus registros
 //Función para mostrar una relación en la consola
-void mostrarRelacion(const Relacion &relacion){
+void mostrarRelacion(const Tabla &relacion){
     cout << "Relacion: " << relacion.nombre << endl;
     cout << "|";
 
@@ -126,7 +126,7 @@ void mostrarRelacion(const Relacion &relacion){
 }
 
 
-int buscarPosicionTablaPorNombre(vector<Relacion> &relaciones,string nombre_tabla){
+int buscarPosicionTablaPorNombre(vector<Tabla> &relaciones,string nombre_tabla){
     for (int i = 0; i < relaciones.size(); i++){
         if (relaciones[i].nombre == nombre_tabla){
             return i;
@@ -136,8 +136,8 @@ int buscarPosicionTablaPorNombre(vector<Relacion> &relaciones,string nombre_tabl
 }
 
 
-void SELECT_ALL_FROM(vector<Relacion> &relaciones,string nombre_tabla){
-    Relacion &relacion_encontrada = relaciones[buscarPosicionTablaPorNombre(relaciones,nombre_tabla)];
+void SELECT_ALL_FROM(vector<Tabla> &relaciones,string nombre_tabla){
+    Tabla &relacion_encontrada = relaciones[buscarPosicionTablaPorNombre(relaciones,nombre_tabla)];
     string archivoDatos = relacion_encontrada.nombre + ".txt";
     leerDatosRelacion(relacion_encontrada, archivoDatos);
     mostrarRelacion(relacion_encontrada);
@@ -145,7 +145,7 @@ void SELECT_ALL_FROM(vector<Relacion> &relaciones,string nombre_tabla){
 
 int main(){
 
-    vector<Relacion> relaciones = leerEsquema("esquema.txt");
+    vector<Tabla> relaciones = leerEsquema("esquema.txt");
     SELECT_ALL_FROM(relaciones, "depts");
     SELECT_ALL_FROM(relaciones, "estudiantes");
 
