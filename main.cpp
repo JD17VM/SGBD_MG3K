@@ -6,7 +6,7 @@
 using namespace std;
 
 // Estructura para representar una tupla en una relación
-struct Tupla{
+struct Registro{
     vector<string> valores;
 };
 
@@ -14,7 +14,7 @@ struct Tupla{
 struct Tabla{
     string nombre;
     vector<string> atributos;
-    vector<Tupla> tuplas;
+    vector<Registro> registros;
 };
 
 //Recibe un texto y un caracter delimitador ("texto1#texto2#texto3", '#')
@@ -87,12 +87,12 @@ void leerDatosRelacion(Tabla &relacion, string archivoDatos){
             vector<string> valores = split(linea, '#');
 
             // Crear una nueva tupla y agregarla a la relación
-            Tupla tupla;
+            Registro registro;
             for (int i = 0; i < valores.size(); i++){
-                tupla.valores.push_back(valores[i]);
+                registro.valores.push_back(valores[i]);
             }
 
-            relacion.tuplas.push_back(tupla);
+            relacion.registros.push_back(registro);
         }
 
         archivo.close();
@@ -114,10 +114,10 @@ void mostrarRelacion(const Tabla &relacion){
 
     cout << endl;
 
-    for (const Tupla &tupla : relacion.tuplas){
+    for (const Registro &registro : relacion.registros){
         cout << "|";
 
-        for (const string &valor : tupla.valores){
+        for (const string &valor : registro.valores){
             cout << " " << valor << " |";
         }
 
