@@ -125,21 +125,29 @@ void mostrarRelacion(const Relacion &relacion){
     }
 }
 
-void SELECT_ALL_FROM(vector<Relacion> &relaciones,string nombre_tabla){
-    for (Relacion &relacion : relaciones){
-        if(relacion.nombre == nombre_tabla){
-            string archivoDatos = relacion.nombre + ".txt";
-            leerDatosRelacion(relacion, archivoDatos);
-            mostrarRelacion(relacion);
+
+int buscarPosicionTablaPorNombre(vector<Relacion> &relaciones,string nombre_tabla){
+    for (int i = 0; i < relaciones.size(); i++){
+        if (relaciones[i].nombre == nombre_tabla){
+            return i;
         }
     }
+    return -1;
+}
+
+
+void SELECT_ALL_FROM(vector<Relacion> &relaciones,string nombre_tabla){
+    Relacion &relacion_encontrada = relaciones[buscarPosicionTablaPorNombre(relaciones,nombre_tabla)];
+    string archivoDatos = relacion_encontrada.nombre + ".txt";
+    leerDatosRelacion(relacion_encontrada, archivoDatos);
+    mostrarRelacion(relacion_encontrada);
 }
 
 int main(){
 
     vector<Relacion> relaciones = leerEsquema("esquema.txt");
-    SELECT_ALL_FROM(relaciones, "estudiantes");
     SELECT_ALL_FROM(relaciones, "depts");
+    SELECT_ALL_FROM(relaciones, "estudiantes");
 
     return 0;
 }
