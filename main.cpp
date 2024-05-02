@@ -38,7 +38,7 @@ vector<string> split(const string &str, const char delimiter){
 //Retorna el vector de todas las Tablas del esquema (Relacion) sólo con los nombres de las tablas y los nombres de columnas
 vector<Tabla> leerEsquema(string archivoEsquema){
     vector<Tabla> relaciones;
-    ifstream archivo(archivoEsquema);
+    ifstream archivo("db/" + archivoEsquema);
 
     if (archivo.is_open()){
         string linea;
@@ -76,7 +76,7 @@ vector<Tabla> leerEsquema(string archivoEsquema){
 //Recibe una Tabla (Relacion) y con su nombre y atributos (nombres de columnas) y el nombre del archivo txt de los registros
 //Llena la Tabla (Relacion) con los registros correspondientes de el mismo archivo
 void leerDatosRelacion(Tabla &relacion, string archivoDatos){
-    ifstream archivo(archivoDatos);
+    ifstream archivo("db/"+ archivoDatos);
 
     if (archivo.is_open()){
         string linea;
