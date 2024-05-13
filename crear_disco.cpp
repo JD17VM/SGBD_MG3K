@@ -13,6 +13,21 @@ struct Espacio_HDD{
     int capacidad_total;
     int capacidad_usada;
     vector<Espacio_HDD> vector_espacios_hdd;
+
+    vector<string> listado_de_direcciones_hijos(){
+        vector<string> direcciones;
+        direcciones.push_back(direccion);
+        for(const auto& espacio : vector_espacios_hdd){
+            direcciones.push_back(espacio.direccion);
+            for (const auto& espacio_2 : espacio.vector_espacios_hdd){
+                direcciones.push_back(espacio_2.direccion);
+                for (const auto& espacio_3 : espacio_2.vector_espacios_hdd){
+                    direcciones.push_back(espacio_3.direccion);
+                }
+            }
+        }
+        return direcciones;
+    };
 };
 
 
@@ -154,6 +169,11 @@ int main()
 
     Espacio_HDD ESPACIO_HDD;
     llenarEstructuraHDD(ESPACIO_HDD,"HDD", "PLATO", cantidad_platos, 'A', 'B', "PISTA", cantidad_pistas, "BLOQUE", cantidad_bloques);
+    const vector<string> lista = ESPACIO_HDD.listado_de_direcciones_hijos();
+    for (const string &dir : lista){
+        cout<<dir<<endl;
+    }
+    
     cout<<ESPACIO_HDD.vector_espacios_hdd.size();
     cout<<ESPACIO_HDD.vector_espacios_hdd[0].vector_espacios_hdd.size();
     cout<<ESPACIO_HDD.vector_espacios_hdd[0].vector_espacios_hdd[0].vector_espacios_hdd.size();
