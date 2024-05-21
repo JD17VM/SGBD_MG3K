@@ -185,10 +185,10 @@ int main()
     llenarEstructuraHDD(ESPACIO_HDD,"HDD", "PLATO", cantidad_platos, 'A', 'B', "PISTA", cantidad_pistas, "BLOQUE", cantidad_bloques);
     const vector<string> lista = ESPACIO_HDD.listado_de_direcciones_hijos();
     const vector<int> lista_tam = ESPACIO_HDD.listado_de_tamanio_direcciones_hijos();
-    //crearCarpetasArchivos(lista,10);
+    crearCarpetasArchivos(lista,10);
 
    
-    crearArchivoMetadatos("HDD/metadata.txt", lista, lista_tam);
+    //crearArchivoMetadatos("HDD/metadata.txt", lista, lista_tam);
     //cout<<ESPACIO_HDD.calcularCapacidadTotal();
     
     
