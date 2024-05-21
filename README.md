@@ -15,7 +15,6 @@
     - Capacidad libre, ocupada, de bloques y sectores
 3. Crear una forma de almacenar tablas en cada bloque, ose poner columnas con sus registros:
     - Hacer metadata osea el esquema de las tabalas a parte y los registros a parte
-        
     - Por el momento longitud fija
 4. Hacer que lea archivos .csv y que los almacene en el "disco" , osea que se reparta en los bloques
 5. Añadir opcion de registros manuales (En donde se guarda, mostrar tiempo de ejecucion)
@@ -25,7 +24,6 @@
 8. Filtrar numeros enteros de registro
 9. Mostrar todos los registros
 10. Tiempo de ejecucion par todo eso
-11. 
 
 
 - Estructura variable

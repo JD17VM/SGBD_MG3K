@@ -69,7 +69,7 @@ struct Espacio_HDD{
 
 
 // Se queda, no se modifica
-string completarStringConCeros(int numero, int longitud){
+string completarNumeroConCeros(int numero, int longitud){
     string texto = to_string(numero);
     if (longitud > texto.length()){
         texto = string(longitud - texto.length(), '0') + texto;
@@ -85,8 +85,8 @@ void llenarEstructuraHDD(Espacio_HDD &ESPACIO_HDD, string nombre_disco, string n
     ESPACIO_HDD.capacidad_usada = 0;
 
     for (int i = 1; i <= cant_platos_por_disco; i++){
-        const string plato_a = nombre_disco + "/" + nombre_platos + "_" + completarStringConCeros(i, 2) + "_" + caras_a;
-        const string plato_b = nombre_disco + "/" + nombre_platos + "_" + completarStringConCeros(i, 2) + "_" + caras_b;
+        const string plato_a = nombre_disco + "/" + nombre_platos + "_" + completarNumeroConCeros(i, 2) + "_" + caras_a;
+        const string plato_b = nombre_disco + "/" + nombre_platos + "_" + completarNumeroConCeros(i, 2) + "_" + caras_b;
         Espacio_HDD PLATO_A; 
         Espacio_HDD PLATO_B;
         PLATO_A.tipo = "PLATO_CARA"; 
@@ -98,8 +98,8 @@ void llenarEstructuraHDD(Espacio_HDD &ESPACIO_HDD, string nombre_disco, string n
         PLATO_A.capacidad_usada = 0;
         PLATO_B.capacidad_usada = 0;
         for (int j = 1; j <= cant_pistas_por_cara; j++){
-            const string pista_a = plato_a + "/" + nombre_pistas + "_" + completarStringConCeros(j, 2);
-            const string pista_b = plato_b + "/" + nombre_pistas + "_" + completarStringConCeros(j, 2);
+            const string pista_a = plato_a + "/" + nombre_pistas + "_" + completarNumeroConCeros(j, 2);
+            const string pista_b = plato_b + "/" + nombre_pistas + "_" + completarNumeroConCeros(j, 2);
             Espacio_HDD PISTA_A;
             Espacio_HDD PISTA_B;
             PISTA_A.tipo = "PISTA"; 
@@ -111,8 +111,8 @@ void llenarEstructuraHDD(Espacio_HDD &ESPACIO_HDD, string nombre_disco, string n
             PISTA_A.capacidad_usada = 0;
             PISTA_B.capacidad_usada = 0;
             for (int k = 1; k <= cant_bloques_por_pista; k++){
-                const string bloque_a = pista_a + "/" + nombre_bloques + "_" + completarStringConCeros(k, 2) + ".txt";
-                const string bloque_b = pista_b + "/" + nombre_bloques + "_" + completarStringConCeros(k, 2) + ".txt";
+                const string bloque_a = pista_a + "/" + nombre_bloques + "_" + completarNumeroConCeros(k, 2) + ".txt";
+                const string bloque_b = pista_b + "/" + nombre_bloques + "_" + completarNumeroConCeros(k, 2) + ".txt";
                 Espacio_HDD BLOQUE_A;
                 Espacio_HDD BLOQUE_B;
                 BLOQUE_A.tipo = "BLOQUE"; 
@@ -152,14 +152,15 @@ void crearCarpetasArchivos(const vector<string> &vector_direcciones,int bytes_po
     }
 }
 
-void crearArchivoMetadatos(string direccion,const vector<string> &vector_de_direccion_de_elementos_de_disco){
+void crearArchivoMetadatos(string direccion,const vector<string> &vector_de_direccion_de_elementos_de_disco, const vector<int> &vector_de_tamanios_de_elementos_de_disco){
     ofstream archivo_m(direccion.c_str());
     if (archivo_m.is_open()){
         const string texto;
-        for (const string &vec: vector_de_direccion_de_elementos_de_disco){
-            archivo_m<<vec<<endl;
-            archivo_m.close();
+        for (int i=0; i<vector_de_direccion_de_elementos_de_disco.size();i++){
+            archivo_m<<vector_de_direccion_de_elementos_de_disco[i]<<"      "<<vector_de_tamanios_de_elementos_de_disco[i]<<endl;
+            
         }
+        archivo_m.close();
     }
 }
 
@@ -184,11 +185,10 @@ int main()
     llenarEstructuraHDD(ESPACIO_HDD,"HDD", "PLATO", cantidad_platos, 'A', 'B', "PISTA", cantidad_pistas, "BLOQUE", cantidad_bloques);
     const vector<string> lista = ESPACIO_HDD.listado_de_direcciones_hijos();
     const vector<int> lista_tam = ESPACIO_HDD.listado_de_tamanio_direcciones_hijos();
-    for (const int &vec: lista_tam){
-            cout<<vec<<endl;
-    }
     //crearCarpetasArchivos(lista,10);
-    //crearArchivoMetadatos("HDD/metadata.txt", lista);
+
+   
+    crearArchivoMetadatos("HDD/metadata.txt", lista, lista_tam);
     //cout<<ESPACIO_HDD.calcularCapacidadTotal();
     
     
