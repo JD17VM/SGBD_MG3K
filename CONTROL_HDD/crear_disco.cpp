@@ -11,6 +11,7 @@ using namespace std;
 struct Espacio_HDD
 {
     string tipo; // HDD, PLATO_CARA, PISTA, BLOQUE
+    string id;
     string direccion;
     int capacidad_total;
     int capacidad_usada;
@@ -94,6 +95,25 @@ struct Espacio_HDD
         }
         return tamanios;
     };
+
+    vector<string> listado_de_nombres_id_hijos()
+    {
+        vector<string> tamanios;
+        tamanios.push_back(id);
+        for (const auto &espacio : vector_espacios_hdd)
+        {
+            tamanios.push_back(espacio.id);
+            for (const auto &espacio_2 : espacio.vector_espacios_hdd)
+            {
+                tamanios.push_back(espacio_2.id);
+                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd)
+                {
+                    tamanios.push_back(espacio_3.id);
+                }
+            }
+        }
+        return tamanios;
+    };
 };
 
 struct Estructura_HDD
@@ -127,6 +147,7 @@ struct Estructura_HDD
         ESPACIO_HDD.direccion = "HDD";
         ESPACIO_HDD.capacidad_total = 0;
         ESPACIO_HDD.capacidad_usada = 0;
+        ESPACIO_HDD.id = "H";
 
         for (int i = 1; i <= cant_platos_por_disco; i++)
         {
@@ -142,6 +163,10 @@ struct Estructura_HDD
             PLATO_B.capacidad_total = 0;
             PLATO_A.capacidad_usada = 0;
             PLATO_B.capacidad_usada = 0;
+            const string concatenacion_id_plato_a = "HP" + completarNumeroConCeros(i, 2) + "A";
+            const string concatenacion_id_plato_b = "HP" + completarNumeroConCeros(i, 2) + "B";
+            PLATO_A.id = concatenacion_id_plato_a;
+            PLATO_B.id = concatenacion_id_plato_b;
             for (int j = 1; j <= cant_pistas_por_cara; j++)
             {
                 const string pista_a = plato_a + "/" + nombre_pistas + "_" + completarNumeroConCeros(j, 2);
@@ -156,6 +181,10 @@ struct Estructura_HDD
                 PISTA_B.capacidad_total = 0;
                 PISTA_A.capacidad_usada = 0;
                 PISTA_B.capacidad_usada = 0;
+                const string concatenacion_id_pista_a = concatenacion_id_plato_a + "P" + completarNumeroConCeros(j, 2);
+                const string concatenacion_id_pista_b = concatenacion_id_plato_b + "P" + completarNumeroConCeros(j, 2);
+                PISTA_A.id = concatenacion_id_pista_a;
+                PISTA_B.id = concatenacion_id_pista_b;
                 for (int k = 1; k <= cant_bloques_por_pista; k++)
                 {
                     const string bloque_a = pista_a + "/" + nombre_bloques + "_" + completarNumeroConCeros(k, 2) + ".txt";
@@ -170,6 +199,10 @@ struct Estructura_HDD
                     BLOQUE_B.capacidad_total = bytes_por_bloque;
                     BLOQUE_A.capacidad_usada = 0;
                     BLOQUE_B.capacidad_usada = 0;
+                    const string concatenaccion_id_bloque_a = concatenacion_id_pista_a + "A" + completarNumeroConCeros(k, 2);
+                    const string concatenaccion_id_bloque_b = concatenacion_id_pista_b + "B" + completarNumeroConCeros(k, 2);
+                    BLOQUE_A.id = concatenaccion_id_bloque_a;
+                    BLOQUE_B.id = concatenaccion_id_bloque_b;
                     PISTA_A.vector_espacios_hdd.push_back(BLOQUE_A);
                     PISTA_B.vector_espacios_hdd.push_back(BLOQUE_B);
                 }
@@ -233,7 +266,8 @@ struct Estructura_HDD
                 const string texto_direccion_hijo = ESPACIO_HDD.listado_de_direcciones_hijos()[i];
                 const string texto_tamanio_hijo = to_string(ESPACIO_HDD.listado_de_tamanio_direcciones_hijos()[i]);
                 const string texto_tamanio_hijo_usado = to_string(ESPACIO_HDD.listado_de_tamanio_usado_direcciones_hijos()[i]);
-                archivo_m << texto_direccion_hijo << "#" << texto_tamanio_hijo << "#" << texto_tamanio_hijo_usado <<endl;
+                const string texto_id_hijo = ESPACIO_HDD.listado_de_nombres_id_hijos()[i];
+                archivo_m << texto_id_hijo << "#" << texto_direccion_hijo << "#" << texto_tamanio_hijo << "#" << texto_tamanio_hijo_usado <<endl;
             }
             archivo_m.close();
         }
