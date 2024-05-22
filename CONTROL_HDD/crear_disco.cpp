@@ -190,7 +190,9 @@ struct Estructura_HDD
             const string texto;
             for (int i = 0; i < ESPACIO_HDD.listado_de_direcciones_hijos().size(); i++)
             {
-                archivo_m << ESPACIO_HDD.listado_de_direcciones_hijos()[i] << "      " << ESPACIO_HDD.listado_de_tamanio_direcciones_hijos()[i] << endl;
+                const string texto_direccion_hijo = ESPACIO_HDD.listado_de_direcciones_hijos()[i];
+                const string texto_tamanio_hijo = to_string(ESPACIO_HDD.listado_de_tamanio_direcciones_hijos()[i]);
+                archivo_m << textoCompletadoCon(texto_direccion_hijo,' ',45,"derecha") << "      " << textoCompletadoCon(texto_tamanio_hijo,' ',8,"izquierda") << endl;
             }
             archivo_m.close();
         }
@@ -210,7 +212,7 @@ int main()
         "PLATO", cantidad_platos, 'A', 'B', 
         "PISTA", cantidad_pistas, 
         "BLOQUE", cantidad_bloques,
-        100
+        bytes_por_bloque
     );
 
     E.crearCarpetasArchivos();
