@@ -55,6 +55,8 @@ struct Espacio_HDD
         return capacidadUsada;
     }
 
+    
+
     vector<int> listado_de_tamanio_direcciones_hijos()
     {
         vector<int> tamanios;
@@ -184,6 +186,7 @@ struct Estructura_HDD
 
     void crearArchivoMetadatos(string direccion)
     {
+        const direccion = nombre_disco + "/" + direccion;
         ofstream archivo_m(direccion.c_str());
         if (archivo_m.is_open())
         {
@@ -216,7 +219,7 @@ int main()
     );
 
     E.crearCarpetasArchivos();
-    E.crearArchivoMetadatos("HDD/metadata.txt");
+    E.crearArchivoMetadatos("metadata.txt");
 
     return 0;
 }
