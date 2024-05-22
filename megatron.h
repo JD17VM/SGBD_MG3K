@@ -11,3 +11,26 @@ string completarNumeroConCeros(int numero, int longitud)
     }
     return texto;
 }
+
+
+void completarTextoCon(string &texto,char caracter, int longitud, string posicion){
+    if (longitud > texto.length()){
+        if(posicion == "derecha"){
+            texto = texto + string(longitud - texto.length(),caracter);
+        }else if(posicion == "izquierda"){
+            texto = string(longitud - texto.length(),caracter) + texto;
+        }
+    }
+}
+
+
+string textoCompletadoCon(string texto,char caracter, int longitud, string posicion){
+    if (longitud > texto.length()){
+        if(posicion == "derecha"){
+            texto = texto + string(longitud - texto.length(),caracter);
+        }else if(posicion == "izquierda"){
+            texto = string(longitud - texto.length(),caracter) + texto;
+        }
+    }
+    return texto;
+}
