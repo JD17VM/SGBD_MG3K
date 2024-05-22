@@ -4,24 +4,30 @@
 #include <fstream>
 #include <windows.h>
 #include <iomanip> // Para std::setw
+#include "../megatron.h"
 
 using namespace std;
 
-struct Espacio_HDD{
-    string tipo; //HDD, PLATO_CARA, PISTA, BLOQUE
+struct Espacio_HDD
+{
+    string tipo; // HDD, PLATO_CARA, PISTA, BLOQUE
     string direccion;
     int capacidad_total;
     int capacidad_usada;
     vector<Espacio_HDD> vector_espacios_hdd;
 
-    vector<string> listado_de_direcciones_hijos(){
+    vector<string> listado_de_direcciones_hijos()
+    {
         vector<string> direcciones;
         direcciones.push_back(direccion);
-        for(const auto& espacio : vector_espacios_hdd){
+        for (const auto &espacio : vector_espacios_hdd)
+        {
             direcciones.push_back(espacio.direccion);
-            for (const auto& espacio_2 : espacio.vector_espacios_hdd){
+            for (const auto &espacio_2 : espacio.vector_espacios_hdd)
+            {
                 direcciones.push_back(espacio_2.direccion);
-                for (const auto& espacio_3 : espacio_2.vector_espacios_hdd){
+                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd)
+                {
                     direcciones.push_back(espacio_3.direccion);
                 }
             }
@@ -29,67 +35,60 @@ struct Espacio_HDD{
         return direcciones;
     };
 
-    
-
-
-
-    int calcularCapacidadTotal() const {
+    int calcularCapacidadTotal() const
+    {
         int capacidadTotal = capacidad_total;
-        for(const auto& espacio : vector_espacios_hdd) {
+        for (const auto &espacio : vector_espacios_hdd)
+        {
             capacidadTotal += espacio.calcularCapacidadTotal();
         }
         return capacidadTotal;
     }
 
-    int calcularEspacioUsado() const {
+    int calcularEspacioUsado() const
+    {
         int capacidadUsada = capacidad_usada;
-        for(const auto& espacio : vector_espacios_hdd) {
+        for (const auto &espacio : vector_espacios_hdd)
+        {
             capacidadUsada += espacio.calcularEspacioUsado();
         }
         return capacidadUsada;
     }
 
-    vector<int> listado_de_tamanio_direcciones_hijos(){
+    vector<int> listado_de_tamanio_direcciones_hijos()
+    {
         vector<int> tamanios;
         tamanios.push_back(calcularEspacioUsado());
-        for(const auto& espacio : vector_espacios_hdd){
+        for (const auto &espacio : vector_espacios_hdd)
+        {
             tamanios.push_back(espacio.calcularEspacioUsado());
-            for (const auto& espacio_2 : espacio.vector_espacios_hdd){
+            for (const auto &espacio_2 : espacio.vector_espacios_hdd)
+            {
                 tamanios.push_back(espacio_2.calcularEspacioUsado());
-                for (const auto& espacio_3 : espacio_2.vector_espacios_hdd){
+                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd)
+                {
                     tamanios.push_back(espacio_3.calcularEspacioUsado());
                 }
             }
         }
         return tamanios;
     };
-
-    
 };
 
-
-// Se queda, no se modifica
-string completarNumeroConCeros(int numero, int longitud){
-    string texto = to_string(numero);
-    if (longitud > texto.length()){
-        texto = string(longitud - texto.length(), '0') + texto;
-    }
-    return texto;
-}
-
-
-void llenarEstructuraHDD(Espacio_HDD &ESPACIO_HDD, string nombre_disco, string nombre_platos, int cant_platos_por_disco, char caras_a, char caras_b, string nombre_pistas, int cant_pistas_por_cara, string nombre_bloques, int cant_bloques_por_pista){
+void llenarEstructuraHDD(Espacio_HDD &ESPACIO_HDD, string nombre_disco, string nombre_platos, int cant_platos_por_disco, char caras_a, char caras_b, string nombre_pistas, int cant_pistas_por_cara, string nombre_bloques, int cant_bloques_por_pista)
+{
     ESPACIO_HDD.tipo = "HDD";
     ESPACIO_HDD.direccion = "HDD";
     ESPACIO_HDD.capacidad_total = 0;
     ESPACIO_HDD.capacidad_usada = 0;
 
-    for (int i = 1; i <= cant_platos_por_disco; i++){
+    for (int i = 1; i <= cant_platos_por_disco; i++)
+    {
         const string plato_a = nombre_disco + "/" + nombre_platos + "_" + completarNumeroConCeros(i, 2) + "_" + caras_a;
         const string plato_b = nombre_disco + "/" + nombre_platos + "_" + completarNumeroConCeros(i, 2) + "_" + caras_b;
-        Espacio_HDD PLATO_A; 
+        Espacio_HDD PLATO_A;
         Espacio_HDD PLATO_B;
-        PLATO_A.tipo = "PLATO_CARA"; 
+        PLATO_A.tipo = "PLATO_CARA";
         PLATO_B.tipo = "PLATO_CARA";
         PLATO_A.direccion = plato_a;
         PLATO_B.direccion = plato_b;
@@ -97,12 +96,13 @@ void llenarEstructuraHDD(Espacio_HDD &ESPACIO_HDD, string nombre_disco, string n
         PLATO_B.capacidad_total = 0;
         PLATO_A.capacidad_usada = 0;
         PLATO_B.capacidad_usada = 0;
-        for (int j = 1; j <= cant_pistas_por_cara; j++){
+        for (int j = 1; j <= cant_pistas_por_cara; j++)
+        {
             const string pista_a = plato_a + "/" + nombre_pistas + "_" + completarNumeroConCeros(j, 2);
             const string pista_b = plato_b + "/" + nombre_pistas + "_" + completarNumeroConCeros(j, 2);
             Espacio_HDD PISTA_A;
             Espacio_HDD PISTA_B;
-            PISTA_A.tipo = "PISTA"; 
+            PISTA_A.tipo = "PISTA";
             PISTA_B.tipo = "PISTA";
             PISTA_A.direccion = pista_a;
             PISTA_B.direccion = pista_b;
@@ -110,12 +110,13 @@ void llenarEstructuraHDD(Espacio_HDD &ESPACIO_HDD, string nombre_disco, string n
             PISTA_B.capacidad_total = 0;
             PISTA_A.capacidad_usada = 0;
             PISTA_B.capacidad_usada = 0;
-            for (int k = 1; k <= cant_bloques_por_pista; k++){
+            for (int k = 1; k <= cant_bloques_por_pista; k++)
+            {
                 const string bloque_a = pista_a + "/" + nombre_bloques + "_" + completarNumeroConCeros(k, 2) + ".txt";
                 const string bloque_b = pista_b + "/" + nombre_bloques + "_" + completarNumeroConCeros(k, 2) + ".txt";
                 Espacio_HDD BLOQUE_A;
                 Espacio_HDD BLOQUE_B;
-                BLOQUE_A.tipo = "BLOQUE"; 
+                BLOQUE_A.tipo = "BLOQUE";
                 BLOQUE_B.tipo = "BLOQUE";
                 BLOQUE_A.direccion = bloque_a;
                 BLOQUE_B.direccion = bloque_b;
@@ -134,67 +135,67 @@ void llenarEstructuraHDD(Espacio_HDD &ESPACIO_HDD, string nombre_disco, string n
     }
 }
 
-
 // Modificar para que lea la estructura
-void crearCarpetasArchivos(const vector<string> &vector_direcciones,int bytes_por_bloque){
-    for (const string direccion : vector_direcciones){
-        if (direccion[direccion.length() - 4] == '.'){
+void crearCarpetasArchivos(const vector<string> &vector_direcciones, int bytes_por_bloque)
+{
+    for (const string direccion : vector_direcciones)
+    {
+        if (direccion[direccion.length() - 4] == '.')
+        {
             ofstream archivo(direccion.c_str());
-            if (archivo.is_open()){
-                const string espacios_vacios(bytes_por_bloque,'*');
-                archivo<<espacios_vacios;
+            if (archivo.is_open())
+            {
+                const string espacios_vacios(bytes_por_bloque, '*');
+                archivo << espacios_vacios;
                 archivo.close();
             }
         }
-        else{
+        else
+        {
             CreateDirectory(direccion.c_str(), NULL);
         }
     }
 }
 
-void crearArchivoMetadatos(string direccion,const vector<string> &vector_de_direccion_de_elementos_de_disco, const vector<int> &vector_de_tamanios_de_elementos_de_disco){
+void crearArchivoMetadatos(string direccion, const vector<string> &vector_de_direccion_de_elementos_de_disco, const vector<int> &vector_de_tamanios_de_elementos_de_disco)
+{
     ofstream archivo_m(direccion.c_str());
-    if (archivo_m.is_open()){
+    if (archivo_m.is_open())
+    {
         const string texto;
-        for (int i=0; i<vector_de_direccion_de_elementos_de_disco.size();i++){
-            archivo_m<<vector_de_direccion_de_elementos_de_disco[i]<<"      "<<vector_de_tamanios_de_elementos_de_disco[i]<<endl;
-            
+        for (int i = 0; i < vector_de_direccion_de_elementos_de_disco.size(); i++)
+        {
+            archivo_m << vector_de_direccion_de_elementos_de_disco[i] << "      " << vector_de_tamanios_de_elementos_de_disco[i] << endl;
         }
         archivo_m.close();
     }
 }
 
-
 int main()
 {
-
 
     int cantidad_platos = 4;
     int cantidad_pistas = 3;
     int cantidad_bloques = 6;
     int bytes_por_bloque = 100;
 
-    //vector<string> vec_dic = vectorDireccionesEstructuraHDD("HDD", "PLATO", cantidad_platos, 'A', 'B', "PISTA", cantidad_pistas, ///////"BLOQUE", cantidad_bloques);
+    // vector<string> vec_dic = vectorDireccionesEstructuraHDD("HDD", "PLATO", cantidad_platos, 'A', 'B', "PISTA", cantidad_pistas, ///////"BLOQUE", cantidad_bloques);
 
-    //crearCarpetasArchivos(vec_dic,bytes_por_bloque);
-    //crearArchivoMetadatos("HDD/metadata.txt", vec_dic);
-
-
+    // crearCarpetasArchivos(vec_dic,bytes_por_bloque);
+    // crearArchivoMetadatos("HDD/metadata.txt", vec_dic);
 
     Espacio_HDD ESPACIO_HDD;
-    llenarEstructuraHDD(ESPACIO_HDD,"HDD", "PLATO", cantidad_platos, 'A', 'B', "PISTA", cantidad_pistas, "BLOQUE", cantidad_bloques);
+    llenarEstructuraHDD(ESPACIO_HDD, "HDD", "PLATO", cantidad_platos, 'A', 'B', "PISTA", cantidad_pistas, "BLOQUE", cantidad_bloques);
     const vector<string> lista = ESPACIO_HDD.listado_de_direcciones_hijos();
     const vector<int> lista_tam = ESPACIO_HDD.listado_de_tamanio_direcciones_hijos();
-    crearCarpetasArchivos(lista,10);
+    crearCarpetasArchivos(lista, 10);
 
-   
-    //crearArchivoMetadatos("HDD/metadata.txt", lista, lista_tam);
-    //cout<<ESPACIO_HDD.calcularCapacidadTotal();
-    
-    
-    //cout<<ESPACIO_HDD.vector_espacios_hdd.size();
-    //cout<<ESPACIO_HDD.vector_espacios_hdd[0].vector_espacios_hdd.size();
-    //cout<<ESPACIO_HDD.vector_espacios_hdd[0].vector_espacios_hdd[0].vector_espacios_hdd.size();
+    // crearArchivoMetadatos("HDD/metadata.txt", lista, lista_tam);
+    // cout<<ESPACIO_HDD.calcularCapacidadTotal();
+
+    // cout<<ESPACIO_HDD.vector_espacios_hdd.size();
+    // cout<<ESPACIO_HDD.vector_espacios_hdd[0].vector_espacios_hdd.size();
+    // cout<<ESPACIO_HDD.vector_espacios_hdd[0].vector_espacios_hdd[0].vector_espacios_hdd.size();
 
     return 0;
 }
