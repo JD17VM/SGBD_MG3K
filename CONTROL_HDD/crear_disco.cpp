@@ -238,7 +238,7 @@ struct Estructura_HDD
 
     void crearArchivoMetadatos(string nombre_archivo)
     {
-        const string direccion = nombre_disco + "/" + nombre_archivo;
+        const string direccion = nombre_disco + "/" + nombre_archivo + ".txt";
         ofstream archivo_m(direccion.c_str());
         if (archivo_m.is_open())
         {
@@ -256,10 +256,12 @@ struct Estructura_HDD
 
     void crearArchivoMetadatos2(string nombre_archivo)
     {
-        const string direccion = nombre_disco + "/" + nombre_archivo;
+        const string direccion = nombre_disco + "/" + nombre_archivo + ".txt";
         ofstream archivo_m(direccion.c_str());
         if (archivo_m.is_open())
         {
+            const string cabecera = nombre_archivo + "#id#str#direccion#str#espacio_disponible#int#espacio_usado#int\n";
+            archivo_m << cabecera;
             const string texto;
             for (int i = 0; i < ESPACIO_HDD.listado_de_direcciones_hijos().size(); i++)
             {
@@ -291,8 +293,8 @@ int main()
     );
 
     E.crearCarpetasArchivos();
-    E.crearArchivoMetadatos("metadata.txt");
-    E.crearArchivoMetadatos2("metadata2.txt");
+    E.crearArchivoMetadatos("metadata");
+    E.crearArchivoMetadatos2("metadata2");
 
     return 0;
 }
