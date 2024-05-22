@@ -60,6 +60,25 @@ struct Espacio_HDD
     vector<int> listado_de_tamanio_direcciones_hijos()
     {
         vector<int> tamanios;
+        tamanios.push_back(calcularCapacidadTotal());
+        for (const auto &espacio : vector_espacios_hdd)
+        {
+            tamanios.push_back(espacio.calcularCapacidadTotal());
+            for (const auto &espacio_2 : espacio.vector_espacios_hdd)
+            {
+                tamanios.push_back(espacio_2.calcularCapacidadTotal());
+                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd)
+                {
+                    tamanios.push_back(espacio_3.calcularCapacidadTotal());
+                }
+            }
+        }
+        return tamanios;
+    };
+
+    vector<int> listado_de_tamanio_usado_direcciones_hijos()
+    {
+        vector<int> tamanios;
         tamanios.push_back(calcularEspacioUsado());
         for (const auto &espacio : vector_espacios_hdd)
         {
@@ -149,8 +168,8 @@ struct Estructura_HDD
                     BLOQUE_B.direccion = bloque_b;
                     BLOQUE_A.capacidad_total = bytes_por_bloque;
                     BLOQUE_B.capacidad_total = bytes_por_bloque;
-                    BLOQUE_A.capacidad_usada = bytes_por_bloque;
-                    BLOQUE_B.capacidad_usada = bytes_por_bloque;
+                    BLOQUE_A.capacidad_usada = 0;
+                    BLOQUE_B.capacidad_usada = 0;
                     PISTA_A.vector_espacios_hdd.push_back(BLOQUE_A);
                     PISTA_B.vector_espacios_hdd.push_back(BLOQUE_B);
                 }
@@ -184,9 +203,9 @@ struct Estructura_HDD
         }
     }
 
-    void crearArchivoMetadatos(string direccion)
+    void crearArchivoMetadatos(string nombre_archivo)
     {
-        const direccion = nombre_disco + "/" + direccion;
+        const string direccion = nombre_disco + "/" + nombre_archivo;
         ofstream archivo_m(direccion.c_str());
         if (archivo_m.is_open())
         {
@@ -195,7 +214,26 @@ struct Estructura_HDD
             {
                 const string texto_direccion_hijo = ESPACIO_HDD.listado_de_direcciones_hijos()[i];
                 const string texto_tamanio_hijo = to_string(ESPACIO_HDD.listado_de_tamanio_direcciones_hijos()[i]);
-                archivo_m << textoCompletadoCon(texto_direccion_hijo,' ',45,"derecha") << "      " << textoCompletadoCon(texto_tamanio_hijo,' ',8,"izquierda") << endl;
+                const string texto_tamanio_hijo_usado = to_string(ESPACIO_HDD.listado_de_tamanio_usado_direcciones_hijos()[i]);
+                archivo_m << textoCompletadoCon(texto_direccion_hijo,' ',45,"derecha") << "      " << textoCompletadoCon(texto_tamanio_hijo,' ',8,"izquierda") << "/" << texto_tamanio_hijo_usado << endl;
+            }
+            archivo_m.close();
+        }
+    }
+
+    void crearArchivoMetadatos2(string nombre_archivo)
+    {
+        const string direccion = nombre_disco + "/" + nombre_archivo;
+        ofstream archivo_m(direccion.c_str());
+        if (archivo_m.is_open())
+        {
+            const string texto;
+            for (int i = 0; i < ESPACIO_HDD.listado_de_direcciones_hijos().size(); i++)
+            {
+                const string texto_direccion_hijo = ESPACIO_HDD.listado_de_direcciones_hijos()[i];
+                const string texto_tamanio_hijo = to_string(ESPACIO_HDD.listado_de_tamanio_direcciones_hijos()[i]);
+                const string texto_tamanio_hijo_usado = to_string(ESPACIO_HDD.listado_de_tamanio_usado_direcciones_hijos()[i]);
+                archivo_m << texto_direccion_hijo << "#" << texto_tamanio_hijo << "#" << texto_tamanio_hijo_usado <<endl;
             }
             archivo_m.close();
         }
@@ -220,6 +258,7 @@ int main()
 
     E.crearCarpetasArchivos();
     E.crearArchivoMetadatos("metadata.txt");
+    E.crearArchivoMetadatos2("metadata2.txt");
 
     return 0;
 }
