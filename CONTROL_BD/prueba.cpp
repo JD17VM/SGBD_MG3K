@@ -59,10 +59,9 @@ void leer_bloque_con_cabecera(string nombre_archivo){
             cout << "Nombre: " << campo.nombre << ", Tipo: " << campo.tipo << endl;
         }
 
-
-        //while (getline(archivo, linea)) {
-        //    cout<<linea<<endl;
-        //}
+        while (getline(archivo, linea)) {
+            cout<<filtrar_registro(linea,1)<<endl;
+        }
     archivo.close();
     }
 }
@@ -70,9 +69,9 @@ void leer_bloque_con_cabecera(string nombre_archivo){
 
 int main() {
     
-    //leer_bloque_con_cabecera("metadata2.txt");
-    string texto = "HP01AP01A01#HDD/PLATO_01_A/PISTA_01/BLOQUE_01.txt#100#0";
-    cout<<filtrar_registro(texto,6);
+    leer_bloque_con_cabecera("metadata2.txt");
+    //string texto = "HP01AP01A01#HDD/PLATO_01_A/PISTA_01/BLOQUE_01.txt#100#0";
+    //cout<<filtrar_registro(texto,6);
 
     return 0;
 }
