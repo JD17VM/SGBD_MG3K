@@ -28,9 +28,21 @@ vector<Campo> leer_cabecera(string texto_cabecera){
             cont = 0;
         }
     }
-
     return vec;
+}
 
+
+string filtrar_registro(string texto_registro,int numero){
+    string elemento;
+    stringstream ss(texto_registro);
+    int cont = 0;
+    while (getline(ss, elemento, '#')){
+        cont++;
+        if(numero == cont){
+            return elemento;
+        }
+    }
+    return "";
 }
 
 
@@ -58,7 +70,9 @@ void leer_bloque_con_cabecera(string nombre_archivo){
 
 int main() {
     
-    leer_bloque_con_cabecera("metadata2.txt");
+    //leer_bloque_con_cabecera("metadata2.txt");
+    string texto = "HP01AP01A01#HDD/PLATO_01_A/PISTA_01/BLOQUE_01.txt#100#0";
+    cout<<filtrar_registro(texto,6);
 
     return 0;
 }
