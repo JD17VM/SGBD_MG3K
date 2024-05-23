@@ -12,6 +12,11 @@ struct Campo{
     int numero_columna;
 };
 
+
+struct SELECT{
+    string nombre_tabla;
+};
+
 vector<Campo> leer_cabecera(string texto_cabecera){
     vector<Campo> vec;
     int cont = 0;
@@ -49,6 +54,24 @@ string filtrar_registro_por_numero(string texto_registro,int numero){
     return "";
 }
 
+string filtrar_registro_por_numero(string texto_registro,vector<int> numeros){
+    string elemento;
+    stringstream ss(texto_registro);
+    int cont = 0;
+    string texto = "";
+    while (getline(ss, elemento, '#')){
+        cont++;
+        for (const int& numero: numeros){
+            if(numero == cont){
+                texto = texto + elemento + '\t';
+                //texto = texto + elemento + "***";
+                break;
+            }
+        }
+    }
+    return texto;
+}
+
 
 void leer_bloque_con_cabecera(string nombre_archivo){
     ifstream archivo(nombre_archivo);
@@ -63,9 +86,10 @@ void leer_bloque_con_cabecera(string nombre_archivo){
             cout << "Nombre: " << campo.nombre << ", Tipo: " << campo.tipo << ", Numero: " << campo.numero_columna << endl;
         }
 
-        //while (getline(archivo, linea)) {
-        //    cout<<filtrar_registro(linea,1)<<endl;
-        //}
+        vector<int> numeros= {2,3,4};
+        while (getline(archivo, linea)) { 
+            cout<<filtrar_registro_por_numero(linea,3)<<endl;
+        }
     archivo.close();
     }
 }
@@ -75,7 +99,8 @@ int main() {
     
     leer_bloque_con_cabecera("metadata2.txt");
     //string texto = "HP01AP01A01#HDD/PLATO_01_A/PISTA_01/BLOQUE_01.txt#100#0";
-    //cout<<filtrar_registro(texto,6);
+    //vector<int> numeros= {1,2,3,4};
+    //cout<<filtrar_registro_por_numero(texto,numeros);
 
     return 0;
 }
