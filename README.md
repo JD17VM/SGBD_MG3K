@@ -27,4 +27,3 @@
 
 
 - Estructura variable
-- En la estructura capacidad total y capacidad usada solo se usa en los tipo bloque en los demas está de adorno corregir eso
