@@ -24,6 +24,7 @@ void completarTextoCon(string &texto,char caracter, int longitud, string posicio
 }
 
 
+
 string textoCompletadoCon(string texto,char caracter, int longitud, string posicion){
     if (longitud > texto.length()){
         if(posicion == "derecha"){
@@ -31,6 +32,8 @@ string textoCompletadoCon(string texto,char caracter, int longitud, string posic
         }else if(posicion == "izquierda"){
             texto = string(longitud - texto.length(),caracter) + texto;
         }
+    } else{
+        texto = texto.substr(0,longitud-3) + "...";
     }
     return texto;
 }

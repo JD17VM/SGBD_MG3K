@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "../megatron.h"
 
 using namespace std;
 
@@ -12,10 +13,6 @@ struct Campo{
     int numero_columna;
 };
 
-
-struct SELECT{
-    string nombre_tabla;
-};
 
 vector<Campo> leer_cabecera(string texto_cabecera){
     vector<Campo> vec;
@@ -39,6 +36,39 @@ vector<Campo> leer_cabecera(string texto_cabecera){
     }
     return vec;
 }
+
+
+struct SELECT{
+    string nombre_tabla;
+    vector<Campo> lista_de_campos;
+
+    SELECT(string direccion_archivo, string nombre_tabla){
+        ifstream archivo(direccion_archivo);
+        if (!archivo.is_open()) {
+            cout << "No se pudo abrir el archivo." << endl;
+        }else{
+
+            string linea;
+            getline(archivo,linea);
+            lista_de_campos = leer_cabecera(linea);
+            for (const auto& campo : lista_de_campos) {
+                cout << textoCompletadoCon(campo.nombre,' ',15,"derecha") << " | ";
+            }cout<<endl;
+
+            string elemento;
+            while (getline(archivo, linea)) { 
+                stringstream ss(linea);
+                while (getline(ss, elemento, '#')){
+                    cout << textoCompletadoCon(elemento,' ',15,"derecha") << " | ";
+                }
+                cout<<endl;
+            }
+        archivo.close();
+        }
+    }
+};
+
+
 
 
 string filtrar_registro_por_numero(string texto_registro,int numero){
@@ -97,10 +127,12 @@ void leer_bloque_con_cabecera(string nombre_archivo){
 
 int main() {
     
-    leer_bloque_con_cabecera("metadata2.txt");
+    //leer_bloque_con_cabecera("metadata2.txt");
     //string texto = "HP01AP01A01#HDD/PLATO_01_A/PISTA_01/BLOQUE_01.txt#100#0";
     //vector<int> numeros= {1,2,3,4};
     //cout<<filtrar_registro_por_numero(texto,numeros);
+
+    SELECT n("metadata2.txt","metadata2");
 
     return 0;
 }
