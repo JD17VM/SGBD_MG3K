@@ -37,6 +37,50 @@ vector<Campo> leer_cabecera(string texto_cabecera){
     return vec;
 }
 
+vector<int> numeros_de_campos(vector<string> &campos_solicitados,vector<Campo> &campos_todo){
+    vector<int> v;
+    for(const auto& campo_t : campos_todo){
+        for(const string& campo_s : campos_solicitados){
+            if(campo_t.nombre == campo_s){
+                v.push_back(campo_t.numero_columna);
+            }
+        }
+    }
+    return v;
+}
+
+string filtrar_registro_por_numero(string texto_registro,int numero){
+    string elemento;
+    stringstream ss(texto_registro);
+    int cont = 0;
+    while (getline(ss, elemento, '#')){
+        cont++;
+        if(numero == cont){
+            return elemento;
+        }
+    }
+    return "";
+}
+
+string filtrar_registro_por_numero(string texto_registro,vector<int> numeros){
+    string elemento;
+    stringstream ss(texto_registro);
+    int cont = 0;
+    string texto = "";
+    while (getline(ss, elemento, '#')){
+        cont++;
+        for (const int& numero: numeros){
+            if(numero == cont){
+                texto = texto + textoCompletadoCon(elemento,' ',15,"derecha") + " | ";
+                //texto = texto + elemento + "***";
+                
+                break;
+            }
+        }
+    }
+    return texto;
+}
+
 
 struct SELECT{
     string nombre_tabla;
@@ -91,66 +135,33 @@ struct SELECT{
         }
     }
 
+    void SELECT_N(string direccion_archivo,string nombre_tabla,vector<string> campos){
+        ifstream archivo(direccion_archivo);
+        if (!archivo.is_open()) {
+            cout << "No se pudo abrir el archivo." << endl;
+        }else{
 
+            string linea;
+            getline(archivo,linea);
+            lista_de_campos = leer_cabecera(linea);
+            const vector<int> n= numeros_de_campos(campos,lista_de_campos);
+
+            for (const auto& campo : campos) {
+                cout << textoCompletadoCon(campo,' ',15,"derecha") << " | ";
+            }cout<<endl;
+
+            string elemento;
+            while (getline(archivo, linea)) { 
+                const string elemento = filtrar_registro_por_numero(linea,n);
+                cout << elemento;
+                cout<<endl;
+            }
+        archivo.close();
+        }
+    }
 
 
 };
-
-
-
-string filtrar_registro_por_numero(string texto_registro,int numero){
-    string elemento;
-    stringstream ss(texto_registro);
-    int cont = 0;
-    while (getline(ss, elemento, '#')){
-        cont++;
-        if(numero == cont){
-            return elemento;
-        }
-    }
-    return "";
-}
-
-string filtrar_registro_por_numero(string texto_registro,vector<int> numeros){
-    string elemento;
-    stringstream ss(texto_registro);
-    int cont = 0;
-    string texto = "";
-    while (getline(ss, elemento, '#')){
-        cont++;
-        for (const int& numero: numeros){
-            if(numero == cont){
-                texto = texto + elemento + '\t';
-                //texto = texto + elemento + "***";
-                break;
-            }
-        }
-    }
-    return texto;
-}
-
-
-void leer_bloque_con_cabecera(string nombre_archivo){
-    ifstream archivo(nombre_archivo);
-    if (!archivo.is_open()) {
-        cout << "No se pudo abrir el archivo." << endl;
-    }else{
-
-        string linea;
-        getline(archivo,linea);
-        const vector<Campo> vec = leer_cabecera(linea);
-        for (const auto& campo : vec) {
-            cout << "Nombre: " << campo.nombre << ", Tipo: " << campo.tipo << ", Numero: " << campo.numero_columna << endl;
-        }
-
-        vector<int> numeros= {2,3,4};
-        while (getline(archivo, linea)) { 
-            cout<<filtrar_registro_por_numero(linea,3)<<endl;
-        }
-    archivo.close();
-    }
-}
-
 
 int main() {
     
@@ -160,8 +171,9 @@ int main() {
     //cout<<filtrar_registro_por_numero(texto,numeros);
 
     SELECT n;
-    //n.SELECT_ALL("metadata2.txt","metadata2");
-    n.SELECT_ALL("metadata.txt","metadata","metadata#id#str#direccion#str#espacio_disponible#int#espacio_usado#int");
+    vector<string> campos = {"direccion","espacio_disponible","espacio_usado"};
+    n.SELECT_N("metadata2.txt","metadata2",campos);
+    //n.SELECT_ALL("metadata.txt","metadata","metadata#id#str#direccion#str#espacio_disponible#int#espacio_usado#int");
 
     return 0;
 }
