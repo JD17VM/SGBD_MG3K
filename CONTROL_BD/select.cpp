@@ -42,7 +42,7 @@ struct SELECT{
     string nombre_tabla;
     vector<Campo> lista_de_campos;
 
-    SELECT(string direccion_archivo, string nombre_tabla){
+    void SELECT_ALL(string direccion_archivo, string nombre_tabla){
         ifstream archivo(direccion_archivo);
         if (!archivo.is_open()) {
             cout << "No se pudo abrir el archivo." << endl;
@@ -66,8 +66,35 @@ struct SELECT{
         archivo.close();
         }
     }
-};
 
+    void SELECT_ALL(string direccion_archivo,string nombre_tabla, string cabecera){
+        ifstream archivo(direccion_archivo);
+        if (!archivo.is_open()) {
+            cout << "No se pudo abrir el archivo." << endl;
+        }else{
+
+            lista_de_campos = leer_cabecera(cabecera);
+            for (const auto& campo : lista_de_campos) {
+                cout << textoCompletadoCon(campo.nombre,' ',15,"derecha") << " | ";
+            }cout<<endl;
+
+            string linea;
+            string elemento;
+            while (getline(archivo, linea)) { 
+                stringstream ss(linea);
+                while (getline(ss, elemento, '#')){
+                    cout << textoCompletadoCon(elemento,' ',15,"derecha") << " | ";
+                }
+                cout<<endl;
+            }
+        archivo.close();
+        }
+    }
+
+
+
+
+};
 
 
 
@@ -132,7 +159,9 @@ int main() {
     //vector<int> numeros= {1,2,3,4};
     //cout<<filtrar_registro_por_numero(texto,numeros);
 
-    SELECT n("metadata2.txt","metadata2");
+    SELECT n;
+    //n.SELECT_ALL("metadata2.txt","metadata2");
+    n.SELECT_ALL("metadata.txt","metadata","metadata#id#str#direccion#str#espacio_disponible#int#espacio_usado#int");
 
     return 0;
 }
