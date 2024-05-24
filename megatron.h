@@ -21,6 +21,9 @@ void completarTextoCon(string &texto,char caracter, int longitud, string posicio
             texto = string(longitud - texto.length(),caracter) + texto;
         }
     }
+    else{
+        texto = texto.substr(0,longitud-3) + "...";
+    }
 }
 
 
