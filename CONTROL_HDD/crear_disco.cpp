@@ -27,8 +27,7 @@ int main()
     );
 
     E.crearCarpetasArchivos();
-    //E.crearArchivoMetadatos("metadata");
-    E.crearArchivoMetadatos2("metadata");
+    E.crearArchivoMetadatos("metadata");
 
     return 0;
 }

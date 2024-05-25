@@ -117,7 +117,7 @@ struct Estructura_HDD
         }
     }
 
-    void crearArchivoMetadatos2(string nombre_archivo)
+    void crearArchivoMetadatos(string nombre_archivo)
     {
         const string direccion = nombre_disco + "/" + nombre_archivo + ".txt";
         ofstream archivo_m(direccion.c_str());
