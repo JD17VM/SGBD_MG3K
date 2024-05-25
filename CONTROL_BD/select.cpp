@@ -165,10 +165,6 @@ struct SELECT{
 
 int main() {
     
-    //leer_bloque_con_cabecera("metadata2.txt");
-    //string texto = "HP01AP01A01#HDD/PLATO_01_A/PISTA_01/BLOQUE_01.txt#100#0";
-    //vector<int> numeros= {1,2,3,4};
-    //cout<<filtrar_registro_por_numero(texto,numeros);
 
     SELECT n;
     vector<string> campos = {"direccion","espacio_disponible","espacio_usado"};
