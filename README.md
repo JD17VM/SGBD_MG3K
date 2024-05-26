@@ -1,6 +1,6 @@
 ## Diagramas
 
-- Buffer
+- Bufferf
 
 ![Descripción de la imagen](imgs/Diagrama_Buffer_Manager.png)
 
