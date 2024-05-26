@@ -50,13 +50,6 @@ struct Espacio_HDD
 
     void setNodosEspacio(){
         nodos_espacio.push_back(this);
-        for (auto& espacio : vector_espacios_hdd) {
-            espacio.setNodosEspacio(); // Llamada recursiva para establecer los nodos de los espacios hijos
-        }
-    }
-
-    void setNodosEspacio2(){
-        nodos_espacio.push_back(this);
         for (const auto &espacio : vector_espacios_hdd){
             nodos_espacio.push_back(&espacio);
             for (const auto &espacio_2 : espacio.vector_espacios_hdd){
@@ -67,61 +60,4 @@ struct Espacio_HDD
             }
         }
     }
-
-    vector<int> listado_de_tamanio_direcciones_hijos()
-    {
-        vector<int> tamanios;
-        tamanios.push_back(calcularCapacidadTotal());
-        for (const auto &espacio : vector_espacios_hdd)
-        {
-            tamanios.push_back(espacio.calcularCapacidadTotal());
-            for (const auto &espacio_2 : espacio.vector_espacios_hdd)
-            {
-                tamanios.push_back(espacio_2.calcularCapacidadTotal());
-                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd)
-                {
-                    tamanios.push_back(espacio_3.calcularCapacidadTotal());
-                }
-            }
-        }
-        return tamanios;
-    };
-
-    vector<int> listado_de_tamanio_usado_direcciones_hijos()
-    {
-        vector<int> tamanios;
-        tamanios.push_back(calcularEspacioUsado());
-        for (const auto &espacio : vector_espacios_hdd)
-        {
-            tamanios.push_back(espacio.calcularEspacioUsado());
-            for (const auto &espacio_2 : espacio.vector_espacios_hdd)
-            {
-                tamanios.push_back(espacio_2.calcularEspacioUsado());
-                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd)
-                {
-                    tamanios.push_back(espacio_3.calcularEspacioUsado());
-                }
-            }
-        }
-        return tamanios;
-    };
-
-    vector<string> listado_de_nombres_id_hijos()
-    {
-        vector<string> tamanios;
-        tamanios.push_back(id);
-        for (const auto &espacio : vector_espacios_hdd)
-        {
-            tamanios.push_back(espacio.id);
-            for (const auto &espacio_2 : espacio.vector_espacios_hdd)
-            {
-                tamanios.push_back(espacio_2.id);
-                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd)
-                {
-                    tamanios.push_back(espacio_3.id);
-                }
-            }
-        }
-        return tamanios;
-    };
 };

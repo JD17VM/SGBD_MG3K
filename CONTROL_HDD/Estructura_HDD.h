@@ -127,15 +127,7 @@ struct Estructura_HDD
         {
             const string cabecera = nombre_archivo + "#id#str#direccion#str#espacio_disponible#int#espacio_usado#int\n";
             archivo_m << cabecera;
-            //const string texto;
-            //for (int i = 0; i < HDD.listadoDeDireccionesHijos().size(); i++)
-            //{
-            //    const string texto_direccion_hijo = HDD.listadoDeDireccionesHijos()[i];
-            //    const string texto_tamanio_hijo = to_string(HDD.listado_de_tamanio_direcciones_hijos()[i]);
-            //    const string texto_tamanio_hijo_usado = to_string(HDD.listado_de_tamanio_usado_direcciones_hijos()[i]);
-            //    const string texto_id_hijo = HDD.listado_de_nombres_id_hijos()[i];
-            //    archivo_m << texto_id_hijo << "#" << texto_direccion_hijo << "#" << texto_tamanio_hijo << "#" << texto_tamanio_hijo_usado <<endl;
-            //}
+
             HDD.setNodosEspacio();
             for (const auto &p : HDD.nodos_espacio)
             {
