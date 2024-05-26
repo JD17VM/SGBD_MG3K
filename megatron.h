@@ -1,6 +1,5 @@
-#include <iostream>
-#include <string>
-using namespace std;
+#ifndef MEGATRON_H
+#define MEGATRON_H
 
 string completarNumeroConCeros(int numero, int longitud)
 {
@@ -40,3 +39,5 @@ string textoCompletadoCon(string texto,char caracter, int longitud, string posic
     }
     return texto;
 }
+
+#endif
