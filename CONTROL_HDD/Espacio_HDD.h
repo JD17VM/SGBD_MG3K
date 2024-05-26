@@ -48,6 +48,14 @@ struct Espacio_HDD
         return capacidadUsada;
     }
 
+    //Revisar porque no funciona con recursividad
+    /*void Espacio_HDD::setNodosEspacio() {
+        nodos_espacio.push_back(this);
+        for (auto& espacio : vector_espacios_hdd) {
+            espacio.setNodosEspacio(); // Llamada recursiva para establecer los nodos de los espacios hijos
+        }
+    }*/
+
     void setNodosEspacio(){
         nodos_espacio.push_back(this);
         for (const auto &espacio : vector_espacios_hdd){

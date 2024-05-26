@@ -15,17 +15,17 @@ struct Estructura_HDD
     //Solo para bloques
     int bytes_por_bloque;
 
-    Estructura_HDD(string _nombre_disco, string _nombre_platos, int _cant_platos_por_disco, char _caras_a, char _caras_b, string _nombre_pistas, int _cant_pistas_por_cara, string _nombre_bloques, int _cant_bloques_por_pista, int _bytes_por_bloque){
-        nombre_disco = _nombre_disco;
-        nombre_platos = _nombre_platos;
-        cant_platos_por_disco = _cant_platos_por_disco;
-        caras_a = _caras_a;
-        caras_b = _caras_b;
-        nombre_pistas = _nombre_pistas;
-        cant_pistas_por_cara = _cant_pistas_por_cara;
-        nombre_bloques = _nombre_bloques;
-        cant_bloques_por_pista = _cant_bloques_por_pista;
-        bytes_por_bloque = _bytes_por_bloque;
+    Estructura_HDD(string nombre_disco, string nombre_platos, int cant_platos_por_disco, char caras_a, char caras_b, string nombre_pistas, int cant_pistas_por_cara, string nombre_bloques, int cant_bloques_por_pista, int bytes_por_bloque){
+        this->nombre_disco = nombre_disco;
+        this->nombre_platos = nombre_platos;
+        this->cant_platos_por_disco = cant_platos_por_disco;
+        this->caras_a = caras_a;
+        this->caras_b = caras_b;
+        this->nombre_pistas = nombre_pistas;
+        this->cant_pistas_por_cara = cant_pistas_por_cara;
+        this->nombre_bloques = nombre_bloques;
+        this->cant_bloques_por_pista = cant_bloques_por_pista;
+        this->bytes_por_bloque = bytes_por_bloque;
 
         HDD.tipo = "HDD";
         HDD.direccion = "HDD";
@@ -35,8 +35,8 @@ struct Estructura_HDD
 
         for (int i = 1; i <= cant_platos_por_disco; i++)
         {
-            const string plato_a = nombre_disco + "/" + nombre_platos + "_" + completarNumeroConCeros(i, 2) + "_" + caras_a;
-            const string plato_b = nombre_disco + "/" + nombre_platos + "_" + completarNumeroConCeros(i, 2) + "_" + caras_b;
+            const string plato_a = this->nombre_disco + "/" + nombre_platos + "_" + completarNumeroConCeros(i, 2) + "_" + caras_a;
+            const string plato_b = this->nombre_disco + "/" + nombre_platos + "_" + completarNumeroConCeros(i, 2) + "_" + caras_b;
             Espacio_HDD PLATO_A;
             Espacio_HDD PLATO_B;
             PLATO_A.tipo = "PLATO_CARA";
