@@ -128,6 +128,8 @@ struct Estructura_HDD
             const string cabecera = nombre_archivo + "#id#str#direccion#str#espacio_disponible#int#espacio_usado#int\n";
             archivo_m << cabecera;
 
+            HDD.calcularCapacidadTotal();
+            HDD.calcularEspacioUsado();
             HDD.setNodosEspacio();
             for (const auto &p : HDD.nodos_espacio)
             {

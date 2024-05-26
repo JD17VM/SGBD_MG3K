@@ -28,23 +28,25 @@ struct Espacio_HDD
         return direcciones;
     };
 
-    int calcularCapacidadTotal() const
+    int calcularCapacidadTotal() 
     {
         int capacidadTotal = capacidad_total;
-        for (const auto &espacio : vector_espacios_hdd)
+        for ( auto &espacio : vector_espacios_hdd)
         {
             capacidadTotal += espacio.calcularCapacidadTotal();
         }
+        this->capacidad_total = capacidadTotal;
         return capacidadTotal;
     }
 
-    int calcularEspacioUsado() const
+    int calcularEspacioUsado()
     {
         int capacidadUsada = capacidad_usada;
-        for (const auto &espacio : vector_espacios_hdd)
+        for (auto &espacio : vector_espacios_hdd)
         {
             capacidadUsada += espacio.calcularEspacioUsado();
         }
+        this->capacidad_usada = capacidadUsada;
         return capacidadUsada;
     }
 
