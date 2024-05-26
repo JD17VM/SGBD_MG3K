@@ -7,6 +7,8 @@ struct Espacio_HDD
     int capacidad_usada;
     vector<Espacio_HDD> vector_espacios_hdd;
 
+    vector<const Espacio_HDD*> nodos_espacio; 
+
     vector<string> listadoDeDireccionesHijos()
     {
         vector<string> direcciones;
@@ -44,6 +46,26 @@ struct Espacio_HDD
             capacidadUsada += espacio.calcularEspacioUsado();
         }
         return capacidadUsada;
+    }
+
+    void setNodosEspacio(){
+        nodos_espacio.push_back(this);
+        for (auto& espacio : vector_espacios_hdd) {
+            espacio.setNodosEspacio(); // Llamada recursiva para establecer los nodos de los espacios hijos
+        }
+    }
+
+    void setNodosEspacio2(){
+        nodos_espacio.push_back(this);
+        for (const auto &espacio : vector_espacios_hdd){
+            nodos_espacio.push_back(&espacio);
+            for (const auto &espacio_2 : espacio.vector_espacios_hdd){
+                nodos_espacio.push_back(&espacio_2);
+                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd){
+                    nodos_espacio.push_back(&espacio_3);
+                }
+            }
+        }
     }
 
     vector<int> listado_de_tamanio_direcciones_hijos()

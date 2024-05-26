@@ -1,6 +1,8 @@
 #ifndef MEGATRON_H
 #define MEGATRON_H
 
+using namespace std;
+
 string completarNumeroConCeros(int numero, int longitud)
 {
     string texto = to_string(numero);
