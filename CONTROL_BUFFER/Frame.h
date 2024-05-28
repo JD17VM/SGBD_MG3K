@@ -1,7 +1,3 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <fstream>
 #include "Bloque.h"
 
 using namespace std;
@@ -41,18 +37,18 @@ struct Frame{
     void setBloque(Bloque &bloque){
         this->bloque = &bloque;
         cout<<"Frame: "<<this->direccion_frame<<endl;
-        cout<<"Bloque: "<<this->bloque->direccion_bloque<<endl;
+        cout<<"Bloque: "<<this->bloque->direccion_bloque<<endl<<endl;
         ifstream archivo_origen(this->bloque->direccion_bloque); 
         ofstream archivo_destino(this->direccion_frame);
 
         if (!archivo_origen || !archivo_destino) { 
-            std::cerr << "Error al abrir los archivos." << std::endl;
+            cerr << "Error al abrir los archivos." << endl;
         }
 
-        std::string linea;
+        string linea;
 
-        while (std::getline(archivo_origen, linea)) { 
-            archivo_destino << linea << std::endl;
+        while (getline(archivo_origen, linea)) { 
+            archivo_destino << linea << endl;
         }
 
         archivo_origen.close();

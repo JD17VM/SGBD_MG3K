@@ -1,14 +1,11 @@
-#include <iostream>
-#include <string>
-#include <vector>
-
-
 #include "Frame.h"
 
 using namespace std;
 
 struct Buffer_Manager{
     vector<Frame> Buffer_Pool;
+
+    vector<Bloque> vector_Bloques; 
 
 
     Buffer_Manager(int cantidad_frames){
@@ -27,13 +24,14 @@ struct Buffer_Manager{
                  << " pin count: " << frame.pin_count << " bloque: "
                  << (frame.bloque ? frame.bloque->direccion_bloque : "N/A") << endl;
         }
+        cout<<endl;
     }
 
     
     void agregarBloque(Bloque& nuevo_bloque){
         //cout<<"Entro el bloque";
         if(this->poolSaturated()){
-            cout<<"Saturado";
+            cout<<"BufferPool Saturado"<<endl;
             Frame& f = Buffer_Pool[this->posFrameProximoAVaciarLRU()];
             f.resetearFrame();
             f.setBloque(nuevo_bloque);
@@ -58,8 +56,8 @@ struct Buffer_Manager{
     int comprobarPaginaPos(string pagina){
         int i = 0;
         //cout<<Buffer_Pool.size();
-        for(auto &frame : Buffer_Pool){
-            if(frame.bloque){
+        for(const auto &frame : Buffer_Pool){
+            if(frame.bloque != nullptr){
                 if(frame.bloque->direccion_bloque == pagina){
                     return i;
                 }
@@ -97,10 +95,12 @@ struct Buffer_Manager{
     }
 
     void llamarABloque(string direccion_bloque){
+        cout<<"Llamando a bloque: "<<direccion_bloque<<endl;
         int pos = comprobarPaginaPos(direccion_bloque);
+        cout<<"Posicion: "<<pos<<endl;
         if(pos ==  -1){
-            Bloque b(direccion_bloque);
-            this->agregarBloque(b);
+            vector_Bloques.emplace_back(direccion_bloque);
+            this->agregarBloque(vector_Bloques.back());
         }else{
             for(auto &frame : Buffer_Pool){
                 frame.unPinPage();
