@@ -4,7 +4,6 @@
 #include <fstream>
 
 #include "Buffer_Manager.h"
-//include "Frame.h"
 
 using namespace std;
 
@@ -16,8 +15,8 @@ int main(){
     p.llamarABloque("Bloques/BLOQUE_04.txt");
     p.llamarABloque("Bloques/BLOQUE_06.txt");
     p.imprimirEstado();
-    p.llamarABloque("Bloques/BLOQUE_02.txt");
-    p.imprimirEstado();
+    //p.llamarABloque("Bloques/BLOQUE_02.txt");
+    //p.imprimirEstado();
     
 
    //Frame p("NUEVO");

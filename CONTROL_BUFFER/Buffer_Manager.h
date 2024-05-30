@@ -12,8 +12,7 @@ struct Buffer_Manager{
         for(int i = 1; i <= cantidad_frames;i++){
             const string nombre_frame = "Frame_" + to_string(i) + ".txt";
             string direccion_frame = "Buffer_Pool/" + nombre_frame;
-            Frame f(direccion_frame);
-            Buffer_Pool.push_back(f);
+            Buffer_Pool.emplace_back(direccion_frame);
             ofstream archivo_frame(direccion_frame);
         }
     }
@@ -37,7 +36,7 @@ struct Buffer_Manager{
             f.setBloque(nuevo_bloque);
         }else{
             //cout<<"libre";
-            cout<<this->posPrimerFrameDisponible();
+            cout<<"Posicion Frame disponible "<<this->posPrimerFrameDisponible();
             //Buffer_Pool[this->posPrimerFrameDisponible()].bloque = &nuevo_bloque;
             Buffer_Pool[this->posPrimerFrameDisponible()].setBloque(nuevo_bloque);
         }
@@ -55,9 +54,10 @@ struct Buffer_Manager{
     
     int comprobarPaginaPos(string pagina){
         int i = 0;
-        //cout<<Buffer_Pool.size();
+        cout<<"Tamanio Buffer Pool: "<<Buffer_Pool.size();
         for(const auto &frame : Buffer_Pool){
             if(frame.bloque != nullptr){
+                //cout<<frame.bloque->direccion_bloque<<endl;
                 if(frame.bloque->direccion_bloque == pagina){
                     return i;
                 }
