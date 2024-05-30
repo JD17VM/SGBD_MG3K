@@ -3,7 +3,7 @@
 using namespace std;
 
 struct Frame{
-    Bloque* bloque;
+    shared_ptr<Bloque> bloque;
 
     string direccion_frame;
     int pin_count;
@@ -34,8 +34,8 @@ struct Frame{
         }
     }
 
-    void setBloque(Bloque &bloque){
-        this->bloque = &bloque;
+    void setBloque(shared_ptr<Bloque> bloque){
+        this->bloque = bloque;
         cout<<"Frame: "<<this->direccion_frame<<endl;
         cout<<"Bloque: "<<this->bloque->direccion_bloque<<endl<<endl;
         ifstream archivo_origen(this->bloque->direccion_bloque); 

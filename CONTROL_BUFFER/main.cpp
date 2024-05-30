@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <memory>
 
 #include "Buffer_Manager.h"
 

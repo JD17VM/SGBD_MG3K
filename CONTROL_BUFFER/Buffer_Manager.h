@@ -5,7 +5,7 @@ using namespace std;
 struct Buffer_Manager{
     vector<Frame> Buffer_Pool;
 
-    vector<Bloque> vector_Bloques; 
+    vector<shared_ptr<Bloque>> vector_Bloques; 
 
 
     Buffer_Manager(int cantidad_frames){
@@ -27,7 +27,7 @@ struct Buffer_Manager{
     }
 
     
-    void agregarBloque(Bloque& nuevo_bloque){
+    void agregarBloque(shared_ptr<Bloque> nuevo_bloque){
         //cout<<"Entro el bloque";
         if(this->poolSaturated()){
             cout<<"BufferPool Saturado"<<endl;
@@ -94,13 +94,14 @@ struct Buffer_Manager{
         return pos;
     }
 
-    void llamarABloque(string direccion_bloque){
+    void llamarABloque(const string &direccion_bloque){
         cout<<"Llamando a bloque: "<<direccion_bloque<<endl;
         int pos = comprobarPaginaPos(direccion_bloque);
         cout<<"Posicion: "<<pos<<endl;
         if(pos ==  -1){
-            vector_Bloques.emplace_back(direccion_bloque);
-            this->agregarBloque(vector_Bloques.back());
+            auto nuevo_bloque = make_shared<Bloque>(direccion_bloque);
+            vector_Bloques.push_back(nuevo_bloque);
+            this->agregarBloque(nuevo_bloque);
         }else{
             for(auto &frame : Buffer_Pool){
                 frame.unPinPage();
