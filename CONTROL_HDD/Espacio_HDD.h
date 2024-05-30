@@ -7,7 +7,9 @@ struct Espacio_HDD
     int capacidad_usada;
     vector<Espacio_HDD> vector_espacios_hdd;
 
-    vector<const Espacio_HDD*> nodos_espacio; 
+    vector<const Espacio_HDD*> nodos_espacio; //Raiz
+
+    Espacio_HDD* proximo_bloque_hoja;
 
     vector<string> listadoDeDireccionesHijos()
     {
@@ -27,6 +29,22 @@ struct Espacio_HDD
         }
         return direcciones;
     };
+
+    /*vector<string> listadoDeDireccionesHijos()
+    {
+        vector<string> direcciones;
+        listadoDeDireccionesHijosRecursivo(this, direcciones);
+        return direcciones;
+    }
+
+    void listadoDeDireccionesHijosRecursivo(const Espacio_HDD* nodo, vector<string>& direcciones)
+    {
+        direcciones.push_back(nodo->direccion);
+        for (const auto& espacio : nodo->vector_espacios_hdd)
+        {
+            listadoDeDireccionesHijosRecursivo(&espacio, direcciones);
+        }
+    }*/
 
     int calcularCapacidadTotal() 
     {
@@ -60,11 +78,11 @@ struct Espacio_HDD
 
     void setNodosEspacio(){
         nodos_espacio.push_back(this);
-        for (const auto &espacio : vector_espacios_hdd){
+        for (auto &espacio : vector_espacios_hdd){
             nodos_espacio.push_back(&espacio);
-            for (const auto &espacio_2 : espacio.vector_espacios_hdd){
+            for (auto &espacio_2 : espacio.vector_espacios_hdd){
                 nodos_espacio.push_back(&espacio_2);
-                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd){
+                for (auto &espacio_3 : espacio_2.vector_espacios_hdd){
                     nodos_espacio.push_back(&espacio_3);
                 }
             }
