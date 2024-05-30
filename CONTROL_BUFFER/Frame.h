@@ -16,6 +16,7 @@ struct Frame{
         this->pin_count = 0;
         this->dirty = false;
         this->bloque = nullptr;
+        this->lastUsedCount = 0;
     }
 
 
@@ -69,6 +70,7 @@ struct Frame{
         this->pin_count = 0;
         this->dirty = false;
         this->bloque = nullptr;
+        this->lastUsedCount = 0;
     }
 
 };
