@@ -4,9 +4,7 @@ using namespace std;
 
 struct Buffer_Manager{
     vector<Frame> Buffer_Pool;
-
     vector<shared_ptr<Bloque>> vector_Bloques; 
-
 
     Buffer_Manager(int cantidad_frames){
         for(int i = 1; i <= cantidad_frames;i++){
@@ -26,22 +24,6 @@ struct Buffer_Manager{
         cout<<endl;
     }
 
-    
-    void agregarBloque(shared_ptr<Bloque> nuevo_bloque){
-        //cout<<"Entro el bloque";
-        if(this->poolSaturated()){
-            cout<<"BufferPool Saturado"<<endl;
-            Frame& f = Buffer_Pool[this->posFrameProximoAVaciarLRU()];
-            f.resetearFrame();
-            f.setBloque(nuevo_bloque);
-        }else{
-            //cout<<"libre";
-            cout<<"Posicion Frame disponible "<<this->posPrimerFrameDisponible();
-            //Buffer_Pool[this->posPrimerFrameDisponible()].bloque = &nuevo_bloque;
-            Buffer_Pool[this->posPrimerFrameDisponible()].setBloque(nuevo_bloque);
-        }
-    }
-
     bool poolSaturated(){
         for(const auto &frame : Buffer_Pool){
             if(!(frame.bloque)){
@@ -50,14 +32,13 @@ struct Buffer_Manager{
         }
         return true;
     }
-
     
-    int comprobarPaginaPos(string pagina){
+    int Pos(string pagina){
         int i = 0;
-        cout<<"Tamanio Buffer Pool: "<<Buffer_Pool.size();
         for(const auto &frame : Buffer_Pool){
             if(frame.bloque != nullptr){
-                //cout<<frame.bloque->direccion_bloque<<endl;
+                cout<<"Direccion bloque comprobar: "<<frame.bloque->direccion_bloque<<endl;
+                cout<<"Pagina bloque comprobar: "<<pagina<<endl<<endl;
                 if(frame.bloque->direccion_bloque == pagina){
                     return i;
                 }
@@ -67,8 +48,7 @@ struct Buffer_Manager{
         return -1;
     }
     
-
-   int posPrimerFrameDisponible(){
+    int posPrimerFrameDisponible(){
         int i = 0;
         for(const auto &frame : Buffer_Pool){
             if (!(frame.bloque)){
@@ -77,7 +57,7 @@ struct Buffer_Manager{
             i++;
         }
         return -1;
-   }
+    }
 
     int posFrameProximoAVaciarLRU() {
         int max = -1; // Inicializar con un valor menor que cualquier lastUsedCount posible
@@ -94,9 +74,23 @@ struct Buffer_Manager{
         return pos;
     }
 
+    void agregarBloque(shared_ptr<Bloque> nuevo_bloque){
+        //cout<<"Entro el bloque";
+        if(this->poolSaturated()){
+            cout<<"BufferPool Saturado"<<endl;
+            cout<<"Posicion del Frame Proximo a Vaciar: "<<this->posFrameProximoAVaciarLRU()<<endl;
+            Frame& f = Buffer_Pool[this->posFrameProximoAVaciarLRU()];
+            f.resetearFrame();
+            f.setBloque(nuevo_bloque);
+        }else{
+            cout<<"Posicion Frame disponible "<<this->posPrimerFrameDisponible()<<endl;
+            Buffer_Pool[this->posPrimerFrameDisponible()].setBloque(nuevo_bloque);
+        }
+    }
+
     void llamarABloque(const string &direccion_bloque){
         cout<<"Llamando a bloque: "<<direccion_bloque<<endl;
-        int pos = comprobarPaginaPos(direccion_bloque);
+        int pos = comprobarExistenciaDePaginaEnBufferPoolPos(direccion_bloque);
         cout<<"Posicion: "<<pos<<endl;
         if(pos ==  -1){
             auto nuevo_bloque = make_shared<Bloque>(direccion_bloque);
