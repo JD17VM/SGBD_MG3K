@@ -8,7 +8,6 @@ struct Frame{
     string direccion_frame;
     int pin_count;
     bool dirty;
-
     int lastUsedCount;
 
     Frame(string direccion_frame){
@@ -19,8 +18,6 @@ struct Frame{
         this->lastUsedCount = 0;
     }
 
-
-    
     void setDirty(bool dirty){
         this->dirty = dirty;
     }
