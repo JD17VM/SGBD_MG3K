@@ -18,7 +18,7 @@ int main()
     int cantidad_bloques = 6;
     int bytes_por_bloque = 100;
 
-    Estructura_HDD E(
+    /*Estructura_HDD E(
         "HDD2", 
         "PLATO", cantidad_platos, 'A', 'B', 
         "PISTA", cantidad_pistas, 
@@ -27,12 +27,13 @@ int main()
     );
 
     E.crearCarpetasArchivos();
-    E.crearArchivoMetadatos("metadata");
+    E.crearArchivoMetadatos("metadata");*/
 
-    /*Estructura_HDD E("HDD2","HDD2/metadata.txt",cantidad_platos,cantidad_pistas,cantidad_bloques,bytes_por_bloque);
+    Estructura_HDD E("HDD2","HDD2/metadata.txt",cantidad_platos,cantidad_pistas,cantidad_bloques,bytes_por_bloque);
     for(string texto: E.HDD.listadoDeDireccionesHijos()){
         cout<<texto<<endl;
-    }*/
+    }
+    
     E.HDD.setNodosEspacio();
     cout<<E.HDD.nodos_espacio.size();
     for(const auto &elemento : E.HDD.nodos_espacio){
