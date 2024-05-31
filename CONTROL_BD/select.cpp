@@ -86,43 +86,24 @@ struct SELECT{
     string nombre_tabla;
     vector<Campo> lista_de_campos;
 
-    void SELECT_ALL(string direccion_archivo, string nombre_tabla){
+    void SELECT_ALL(string direccion_archivo,string nombre_tabla, string cabecera = ""){
         ifstream archivo(direccion_archivo);
         if (!archivo.is_open()) {
             cout << "No se pudo abrir el archivo." << endl;
         }else{
 
             string linea;
-            getline(archivo,linea);
-            lista_de_campos = leer_cabecera(linea);
-            for (const auto& campo : lista_de_campos) {
-                cout << textoCompletadoCon(campo.nombre,' ',15,"derecha") << " | ";
-            }cout<<endl;
-
-            string elemento;
-            while (getline(archivo, linea)) { 
-                stringstream ss(linea);
-                while (getline(ss, elemento, '#')){
-                    cout << textoCompletadoCon(elemento,' ',15,"derecha") << " | ";
-                }
-                cout<<endl;
+            if(cabecera == ""){
+                getline(archivo,linea);
+                lista_de_campos = leer_cabecera(linea);
+            }else{
+                lista_de_campos = leer_cabecera(cabecera);
             }
-        archivo.close();
-        }
-    }
 
-    void SELECT_ALL(string direccion_archivo,string nombre_tabla, string cabecera){
-        ifstream archivo(direccion_archivo);
-        if (!archivo.is_open()) {
-            cout << "No se pudo abrir el archivo." << endl;
-        }else{
-
-            lista_de_campos = leer_cabecera(cabecera);
             for (const auto& campo : lista_de_campos) {
                 cout << textoCompletadoCon(campo.nombre,' ',15,"derecha") << " | ";
             }cout<<endl;
 
-            string linea;
             string elemento;
             while (getline(archivo, linea)) { 
                 stringstream ss(linea);
@@ -167,8 +148,9 @@ int main() {
     
 
     SELECT n;
-    vector<string> campos = {"direccion","espacio_disponible","espacio_usado"};
-    n.SELECT_N("metadata2.txt","metadata2",campos);
+    //vector<string> campos = {"direccion","espacio_disponible","espacio_usado"};
+    //n.SELECT_ALL("metadata2.txt","metadata2");
+    n.SELECT_ALL("metadata2.txt","metadata2","metadata2#id#str#direccion#str#espacio_disponible#int#espacio_usado#int");
     //n.SELECT_ALL("metadata.txt","metadata","metadata#id#str#direccion#str#espacio_disponible#int#espacio_usado#int");
 
     return 0;
