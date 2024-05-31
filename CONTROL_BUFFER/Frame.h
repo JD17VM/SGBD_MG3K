@@ -56,12 +56,13 @@ struct Frame{
     void setLastUsedCount(int n){
         this->lastUsedCount = n;
     }
-    /*
+    
     void flushing(){
         if(this->dirty){
+            setDirty(false);
             //copiar texto de Frame sobre Bloque
         }
-    }*/
+    }
 
     void resetearFrame(){
         this->pin_count = 0;

@@ -26,7 +26,13 @@ struct Buffer_Manager
         {
             cout << frame.direccion_frame << " : "
                  << " pin count: " << frame.pin_count << " bloque: "
-                 << (frame.bloque ? frame.bloque->direccion_bloque : "N/A") << " lastUsedCount: " << frame.lastUsedCount << endl;
+                 << (frame.bloque ? frame.bloque->direccion_bloque : "N/A") << " lastUsedCount: " << frame.lastUsedCount 
+                 << " dirty: ";
+                 if(frame.dirty == true){
+                    cout<<"SI";
+                 }else if(frame.dirty == false){
+                    cout<<"NO";
+                 }cout<<endl;
         }
         cout << endl;
     }
@@ -97,7 +103,7 @@ struct Buffer_Manager
         }
     }
 
-    void llamarABloque(string direccion_bloque) {
+    /*void llamarABloque(string direccion_bloque) {
         int pos = Pos(direccion_bloque);
         if (pos != -1) {
             // El bloque ya existe en el buffer, incrementar pin_count y actualizar lastUsedCount
@@ -127,6 +133,59 @@ struct Buffer_Manager
                     Buffer_Pool[pos].pinPage();
                     actualizarPinCounts(pos); // Actualizar pin counts de otros frames
                     vector_Bloques.push_back(newBloque);
+                } else {
+                    cout << "No hay frames disponibles para reemplazar." << endl;
+                }
+            }
+        }
+    }*/
+
+    void flushFrame(int posicion){
+        Buffer_Pool[posicion].flushing();
+    }
+
+    void llamarABloque(string direccion_bloque,char indicadorLW) {
+        int pos = Pos(direccion_bloque);
+        if (pos != -1) {
+            // El bloque ya existe en el buffer, incrementar pin_count y actualizar lastUsedCount
+            Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
+            Buffer_Pool[pos].pinPage();
+            if(indicadorLW == 'W'){
+                Buffer_Pool[pos].setDirty(true);
+            }
+            actualizarPinCounts(pos); // Actualizar pin counts de otros frames
+            cout << "Bloque ya existe en el buffer: " << direccion_bloque << endl;
+            
+        } else {
+            // El bloque no existe en el buffer
+            if (!poolSaturated()) {
+                int pos = posPrimerFrameDisponible();
+                if (pos != -1) {
+                    shared_ptr<Bloque> newBloque = make_shared<Bloque>(direccion_bloque);
+                    Buffer_Pool[pos].setBloque(newBloque);
+                    Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
+                    Buffer_Pool[pos].pinPage();
+                    if(indicadorLW == 'W'){
+                        Buffer_Pool[pos].setDirty(true);
+                    }
+                    actualizarPinCounts(pos); // Actualizar pin counts de otros frames
+                    vector_Bloques.push_back(newBloque);
+                    
+                }
+            } else {
+                int pos = posMenosUsado(); // Encontrar el frame menos recientemente usado con pin_count 0
+                if (pos != -1) {
+                    Buffer_Pool[pos].resetearFrame();
+                    shared_ptr<Bloque> newBloque = make_shared<Bloque>(direccion_bloque);
+                    Buffer_Pool[pos].setBloque(newBloque);
+                    Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
+                    Buffer_Pool[pos].pinPage();
+                    if(indicadorLW == 'W'){
+                        Buffer_Pool[pos].setDirty(true);
+                    }
+                    actualizarPinCounts(pos); // Actualizar pin counts de otros frames
+                    vector_Bloques.push_back(newBloque);
+                    
                 } else {
                     cout << "No hay frames disponibles para reemplazar." << endl;
                 }
