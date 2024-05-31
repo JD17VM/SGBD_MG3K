@@ -29,16 +29,16 @@ int main()
     E.crearCarpetasArchivos();
     E.crearArchivoMetadatos("metadata");
 
-    /*Estructura_HDD E("HDD","HDD/metadata.txt",cantidad_platos,cantidad_pistas,cantidad_bloques,bytes_por_bloque);
+    /*Estructura_HDD E("HDD2","HDD2/metadata.txt",cantidad_platos,cantidad_pistas,cantidad_bloques,bytes_por_bloque);
     for(string texto: E.HDD.listadoDeDireccionesHijos()){
         cout<<texto<<endl;
     }*/
-    /*E.HDD.setNodosEspacio();
+    E.HDD.setNodosEspacio();
     cout<<E.HDD.nodos_espacio.size();
     for(const auto &elemento : E.HDD.nodos_espacio){
         const string texto = elemento->direccion;
         cout<<texto<<endl;
-    }*/
+    }
 
     //cin.get();
 

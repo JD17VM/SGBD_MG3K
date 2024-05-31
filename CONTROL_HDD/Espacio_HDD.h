@@ -35,7 +35,7 @@ struct Espacio_HDD
         vector<string> direcciones;
         listadoDeDireccionesHijosRecursivo(this, direcciones);
         return direcciones;
-    }
+    }*/
 
     void listadoDeDireccionesHijosRecursivo(const Espacio_HDD* nodo, vector<string>& direcciones)
     {
@@ -44,7 +44,7 @@ struct Espacio_HDD
         {
             listadoDeDireccionesHijosRecursivo(&espacio, direcciones);
         }
-    }*/
+    }
 
     int calcularCapacidadTotal() 
     {
