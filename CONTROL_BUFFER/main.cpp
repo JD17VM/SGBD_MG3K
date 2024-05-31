@@ -5,34 +5,19 @@
 #include <memory>
 #include <algorithm>
 #include <cstdlib>
-#ifdef _WIN32
 #include <conio.h> // Para getch() en Windows
-#else
-#include <unistd.h>
-#include <termios.h>
-#endif
+
 
 #include "Buffer_Manager.h"
 
 using namespace std;
 
 void limpiarPantalla() {
-#ifdef _WIN32
     system("cls");
-#else
-    system("clear");
-#endif
 }
 
 void esperarTecla() {
-#ifdef _WIN32
-    cout << "Presiona cualquier tecla para continuar...";
     getch();
-#else
-    cout << "Presiona Enter para continuar...";
-    cin.ignore();
-    cin.get();
-#endif
 }
 
 void mostrarMenuInicial(){
