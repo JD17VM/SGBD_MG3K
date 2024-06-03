@@ -241,13 +241,32 @@ struct Estructura_HDD
                         BLOQUE.direccion = vec3[1];
                         BLOQUE.capacidad_total = stoi(vec3[2]);
                         BLOQUE.capacidad_usada = stoi(vec3[3]);
+                        BLOQUE.id_siguiente_bloque = vec3[4];
+                        
                         HDD.vector_espacios_hdd.back().vector_espacios_hdd.back().vector_espacios_hdd.push_back(BLOQUE); // Añadir BLOQUE a la última PISTA
-                        // cout << "Añadido BLOQUE: " << BLOQUE.direccion << " a la PISTA: " << PISTA.direccion << endl; // Mensaje de depuración
+                        //cout << "Añadido BLOQUE: " << BLOQUE.direccion << " a la PISTA: " << PISTA.direccion << endl; // Mensaje de depuración
+                        
                     }
                 }
             }
 
             archivo.close();
+        }
+        unirBloquesLigados();
+    }
+
+    void unirBloquesLigados(){
+        for(auto& plato : HDD.vector_espacios_hdd){
+            for(auto& pista : plato.vector_espacios_hdd){
+                for(auto& bloque : pista.vector_espacios_hdd){
+                    const string id_siguiente = bloque.id_siguiente_bloque;
+                    if(id_siguiente != "-"){
+                        cout<<id_siguiente<<endl;
+                        unirBloques(bloque,encontrarBloquePorID(id_siguiente));
+                        cout << "Bloque siguiente: " << bloque.siguiente->direccion << endl; // Mensaje de depuración
+                    }
+                }
+            }
         }
     }
 
