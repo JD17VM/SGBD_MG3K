@@ -15,6 +15,8 @@ struct Estructura_HDD
     // Solo para bloques
     int bytes_por_bloque;
 
+    Espacio_HDD Espacio_HDD_no_encontrado; //Op
+
     Estructura_HDD(string nombre_disco, string nombre_platos, int cant_platos_por_disco, char caras_a, char caras_b, string nombre_pistas, int cant_pistas_por_cara, string nombre_bloques, int cant_bloques_por_pista, int bytes_por_bloque)
     {
         this->nombre_disco = nombre_disco;
@@ -248,7 +250,7 @@ struct Estructura_HDD
         }
     }
 
-    // Ocupar bloques disponibles
+    // ---------------------------------------- Ocupar bloques disponibles -----------------------------------------------------
     
     Espacio_HDD& encontrarBloquePorID(string id_bloque){ //Funciona Ok
         for(auto& plato : HDD.vector_espacios_hdd){
@@ -260,6 +262,7 @@ struct Estructura_HDD
                 }
             }
         }
+        return Espacio_HDD_no_encontrado;
     }
 
     void unirBloques(Espacio_HDD& A, Espacio_HDD& B){ //Funciona Ok
@@ -285,6 +288,7 @@ struct Estructura_HDD
                 }
             }
         }
+        return Espacio_HDD_no_encontrado;
     }
 
     /*void llenarBloque(string id,int capacidad){
@@ -328,6 +332,5 @@ struct Estructura_HDD
             }
         }
     }
-
 
 };
