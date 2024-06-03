@@ -9,33 +9,23 @@ struct Espacio_HDD
 
     vector<const Espacio_HDD*> nodos_espacio; //Raiz
 
-    Espacio_HDD* proximo_bloque_hoja;
+    //Espacio_HDD* proximo_bloque_hoja;
+
+    Espacio_HDD* siguiente;
+    Espacio_HDD* anterior;
+
+
+    Espacio_HDD(){
+        this->anterior = nullptr;
+        this->siguiente = nullptr;
+    }
 
     vector<string> listadoDeDireccionesHijos()
     {
         vector<string> direcciones;
-        direcciones.push_back(direccion);
-        for (const auto &espacio : vector_espacios_hdd)
-        {
-            direcciones.push_back(espacio.direccion);
-            for (const auto &espacio_2 : espacio.vector_espacios_hdd)
-            {
-                direcciones.push_back(espacio_2.direccion);
-                for (const auto &espacio_3 : espacio_2.vector_espacios_hdd)
-                {
-                    direcciones.push_back(espacio_3.direccion);
-                }
-            }
-        }
-        return direcciones;
-    };
-
-    /*vector<string> listadoDeDireccionesHijos()
-    {
-        vector<string> direcciones;
         listadoDeDireccionesHijosRecursivo(this, direcciones);
         return direcciones;
-    }*/
+    }
 
     void listadoDeDireccionesHijosRecursivo(const Espacio_HDD* nodo, vector<string>& direcciones)
     {

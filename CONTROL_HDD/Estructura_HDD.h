@@ -247,4 +247,22 @@ struct Estructura_HDD
             archivo.close();
         }
     }
+
+    // Ocupar bloques disponibles
+    
+    Espacio_HDD& encontrarBloquePorID(string id_bloque){ //Funciona Ok
+        for(auto& plato : HDD.vector_espacios_hdd){
+            for(auto& pista : plato.vector_espacios_hdd){
+                for(auto& bloque : pista.vector_espacios_hdd){
+                    if(bloque.id == id_bloque){
+                        return bloque;
+                    }
+                }
+            }
+        }
+    }
+
+    
+
+
 };
