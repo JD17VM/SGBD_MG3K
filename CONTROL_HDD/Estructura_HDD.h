@@ -262,7 +262,19 @@ struct Estructura_HDD
         }
     }
 
-    
+    void unirBloques(Espacio_HDD& A, Espacio_HDD& B){
+        A.siguiente = &B;
+        B.anterior = &A;
+        cout<<"Se ligo el bloque "<<B.anterior->direccion<<" con el Bloque"<<A.siguiente->direccion<<endl;
+    }
 
+    void bloquesLigados(string id_A, string id_B){
+        unirBloques(
+            encontrarBloquePorID(id_A),
+            encontrarBloquePorID(id_B)
+        );
+    }
+
+    
 
 };
