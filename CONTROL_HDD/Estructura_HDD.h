@@ -128,7 +128,7 @@ struct Estructura_HDD
         ofstream archivo_m(direccion.c_str());
         if (archivo_m.is_open())
         {
-            const string cabecera = nombre_archivo + "#id#str#direccion#str#espacio_disponible#int#espacio_usado#int\n";
+            const string cabecera = nombre_archivo + "#id#str#direccion#str#espacio_disponible#int#espacio_usado#int#bloque_ligado#str\n";
             archivo_m << cabecera;
 
             HDD.calcularCapacidadTotal();
@@ -140,7 +140,8 @@ struct Estructura_HDD
                 const string texto_direccion_hijo = p->direccion;
                 const string texto_tamanio_hijo = to_string(p->capacidad_total);
                 const string texto_tamanio_hijo_usado = to_string(p->capacidad_usada);
-                archivo_m << texto_id_hijo << "#" << texto_direccion_hijo << "#" << texto_tamanio_hijo << "#" << texto_tamanio_hijo_usado << endl;
+                const string id_siguiente = p->id_siguiente_bloque;
+                archivo_m << texto_id_hijo << "#" << texto_direccion_hijo << "#" << texto_tamanio_hijo << "#" << texto_tamanio_hijo_usado << "#" << id_siguiente << endl;
             }
             archivo_m.close();
         }

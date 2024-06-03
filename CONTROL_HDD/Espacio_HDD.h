@@ -10,7 +10,7 @@ struct Espacio_HDD
     vector<const Espacio_HDD*> nodos_espacio; //Raiz
 
     //Espacio_HDD* proximo_bloque_hoja;
-
+    string id_siguiente_bloque;
     Espacio_HDD* siguiente;
     Espacio_HDD* anterior;
 
@@ -18,6 +18,7 @@ struct Espacio_HDD
     Espacio_HDD(){
         this->anterior = nullptr;
         this->siguiente = nullptr;
+        this->id_siguiente_bloque = "-";
     }
 
     vector<string> listadoDeDireccionesHijos()
