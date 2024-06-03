@@ -13,13 +13,13 @@ using namespace std;
 int main()
 {
 
-    int cantidad_platos = 4;
+    int cantidad_platos = 2;
     int cantidad_pistas = 3;
-    int cantidad_bloques = 6;
+    int cantidad_bloques = 3;
     int bytes_por_bloque = 100;
 
-    /*Estructura_HDD E(
-        "HDD2", 
+   /*Estructura_HDD E(
+        "HDD", 
         "PLATO", cantidad_platos, 'A', 'B', 
         "PISTA", cantidad_pistas, 
         "BLOQUE", cantidad_bloques,
@@ -29,17 +29,21 @@ int main()
     E.crearCarpetasArchivos();
     E.crearArchivoMetadatos("metadata");*/
 
-    Estructura_HDD E("HDD2","HDD2/metadata.txt",cantidad_platos,cantidad_pistas,cantidad_bloques,bytes_por_bloque);
-    for(string texto: E.HDD.listadoDeDireccionesHijos()){
+    Estructura_HDD E("HDD","HDD/metadata.txt",cantidad_platos,cantidad_pistas,cantidad_bloques,bytes_por_bloque);
+    /*for(string texto: E.HDD.listadoDeDireccionesHijos()){
         cout<<texto<<endl;
-    }
-    
-    E.HDD.setNodosEspacio();
+    }*/
+
+    E.llenarBloque("HP01AP01A02",20);
+    E.llenarBloque("HP01AP02A01",20);
+
+    E.agregarTextoaID("Este se un texto que tiene más de 100 caracteres, es importante considerar que en este caso debería a saltar de linea. A continuacion pongo el ejemplo de un nuevo texto que tiene problemas para solucionar, espero que funque","HP01AP01A01");
+    /*E.HDD.setNodosEspacio();
     cout<<E.HDD.nodos_espacio.size();
     for(const auto &elemento : E.HDD.nodos_espacio){
         const string texto = elemento->direccion;
         cout<<texto<<endl;
-    }
+    }*/
 
     //cin.get();
 
