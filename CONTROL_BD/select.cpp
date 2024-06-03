@@ -10,6 +10,7 @@ using namespace std;
 struct Campo{
     string nombre;
     string tipo;
+    string espacio
     int numero_columna;
 };
 
@@ -141,17 +142,14 @@ struct SELECT{
         }
     }
 
-
 };
 
 int main() {
     
-
     SELECT n;
     //vector<string> campos = {"direccion","espacio_disponible","espacio_usado"};
     //n.SELECT_ALL("metadata2.txt","metadata2");
     n.SELECT_ALL("metadata2.txt","metadata2","metadata2#id#str#direccion#str#espacio_disponible#int#espacio_usado#int");
-    //n.SELECT_ALL("metadata.txt","metadata","metadata#id#str#direccion#str#espacio_disponible#int#espacio_usado#int");
 
     return 0;
 }
