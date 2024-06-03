@@ -262,19 +262,37 @@ struct Estructura_HDD
         }
     }
 
-    void unirBloques(Espacio_HDD& A, Espacio_HDD& B){
+    void unirBloques(Espacio_HDD& A, Espacio_HDD& B){ //Funciona Ok
         A.siguiente = &B;
         B.anterior = &A;
         cout<<"Se ligo el bloque "<<B.anterior->direccion<<" con el Bloque"<<A.siguiente->direccion<<endl;
     }
 
-    void bloquesLigados(string id_A, string id_B){
+    void bloquesLigados(string id_A, string id_B){ //Funciona Ok
         unirBloques(
             encontrarBloquePorID(id_A),
             encontrarBloquePorID(id_B)
         );
     }
 
+
+    void modificarCapacidadUsada(string id,int numero){
+        encontrarBloquePorID(id).capacidad_usada = numero;
+    }
+
+    Espacio_HDD& encontrarBloqueVacio() { //Funciona Ok
+        for (auto& plato : HDD.vector_espacios_hdd) {
+            for (auto& pista : plato.vector_espacios_hdd){
+                for (auto& bloque : pista.vector_espacios_hdd){
+                    if (bloque.tipo == "BLOQUE" && bloque.capacidad_usada == 0) {
+                        return bloque;
+                    }
+                }
+            }
+        }
+    }
+
     
+
 
 };
