@@ -275,12 +275,7 @@ struct Estructura_HDD
         );
     }
 
-
-    void modificarCapacidadUsada(string id,int numero){
-        encontrarBloquePorID(id).capacidad_usada = numero;
-    }
-
-    Espacio_HDD& encontrarBloqueVacio() { //Funciona Ok
+    Espacio_HDD& encontrarPrimerBloqueVacio() { //Funciona Ok
         for (auto& plato : HDD.vector_espacios_hdd) {
             for (auto& pista : plato.vector_espacios_hdd){
                 for (auto& bloque : pista.vector_espacios_hdd){
@@ -292,7 +287,43 @@ struct Estructura_HDD
         }
     }
 
-    
+    void agregarTextoaID(string texto, string id_bloque){
+        Espacio_HDD& Bloque = encontrarBloquePorID(id_bloque);
+        insertarTextoABloque(texto,Bloque);
+    }
+
+    void insertarTextoABloque(string texto,Espacio_HDD& Bloque){
+        const int capacidad_disponible = Bloque.capacidad_total - Bloque.capacidad_usada;
+        const int capacidad_a_ingresar = texto.size();
+        const string direccion = Bloque.direccion;
+        if(capacidad_a_ingresar > capacidad_disponible){
+            const string texto_a = texto.substr(0,capacidad_disponible + 1);
+            const string texto_b = texto.substr(capacidad_disponible,capacidad_a_ingresar);
+            ofstream archivo(direccion.c_str(), ios::app);
+            if (archivo.is_open()) {
+                archivo << texto_a;
+                archivo.close();
+                Bloque.capacidad_usada += capacidad_disponible;
+            } else {
+                cerr << "No se pudo abrir el archivo." << endl;
+            }
+            if(Bloque.siguiente == nullptr){
+                cout<<"No hay bloque ligado"<<endl;
+                unirBloques(Bloque,encontrarBloqueVacio());
+                cout<<"Bloque ligadazo";
+            }
+            insertarTextoABloque(texto_b,*Bloque.siguiente);
+        }else{
+            ofstream archivo(direccion.c_str(), ios::app);
+            if (archivo.is_open()) {
+                archivo << texto;
+                archivo.close();
+                Bloque.capacidad_usada = Bloque.capacidad_usada + capacidad_a_ingresar;
+            } else {
+                cerr << "No se pudo abrir el archivo." << endl;
+            }
+        }
+    }
 
 
 };
