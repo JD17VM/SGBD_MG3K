@@ -15,9 +15,44 @@ struct Estructura_HDD
     // Solo para bloques
     int bytes_por_bloque;
 
-    Espacio_HDD Espacio_HDD_no_encontrado; //Op
+    Espacio_HDD Espacio_HDD_no_encontrado; //Op para return
 
-    Estructura_HDD(string nombre_disco, string nombre_platos, int cant_platos_por_disco, char caras_a, char caras_b, string nombre_pistas, int cant_pistas_por_cara, string nombre_bloques, int cant_bloques_por_pista, int bytes_por_bloque)
+    Estructura_HDD(
+        string nombre_disco, 
+        string nombre_platos, int cant_platos_por_disco, 
+        char caras_a, char caras_b, 
+        string nombre_pistas, int cant_pistas_por_cara, 
+        string nombre_bloques, int cant_bloques_por_pista, 
+        int bytes_por_bloque
+    );
+
+    Estructura_HDD(
+        string direccion_disco, 
+        string direccion_metadata, 
+        int cant_platos_por_disco, 
+        int cant_pistas_por_cara, 
+        int cant_bloques_por_pista, 
+        int bytes_por_bloque
+    );
+
+    void crearCarpetasArchivos();
+    void crearArchivoMetadatos(string nombre_archivo);
+    vector<string> split(const string &str, const char delimiter);
+    vector<string> elementos_registros(string linea);
+    vector<string> elementos_registros2(string linea);
+    void unirBloquesLigados();
+    Espacio_HDD& encontrarBloquePorID(string id_bloque);
+    void unirBloques(Espacio_HDD& A, Espacio_HDD& B);
+    void bloquesLigados(string id_A, string id_B);
+    Espacio_HDD& encontrarPrimerBloqueVacio();
+    void llenarBloque(string id,int capacidad);
+    void agregarTextoaID(string texto, string id_bloque);
+    void insertarTextoABloque(string texto,Espacio_HDD& Bloque);
+    
+};
+
+
+Estructura_HDD::Estructura_HDD(string nombre_disco, string nombre_platos, int cant_platos_por_disco, char caras_a, char caras_b, string nombre_pistas, int cant_pistas_por_cara, string nombre_bloques, int cant_bloques_por_pista, int bytes_por_bloque)
     {
         this->nombre_disco = nombre_disco;
         this->nombre_platos = nombre_platos;
@@ -101,7 +136,7 @@ struct Estructura_HDD
         }
     }
 
-    void crearCarpetasArchivos()
+void Estructura_HDD::crearCarpetasArchivos()
     {
         for (const string direccion : HDD.listadoDeDireccionesHijos())
         {
@@ -122,7 +157,7 @@ struct Estructura_HDD
         }
     }
 
-    void crearArchivoMetadatos(string nombre_archivo)
+void Estructura_HDD::crearArchivoMetadatos(string nombre_archivo)
     {
         const string direccion = nombre_disco + "/" + nombre_archivo + ".txt";
         cout<<direccion<<endl;
@@ -148,9 +183,7 @@ struct Estructura_HDD
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------------------------------------
-
-    vector<string> split(const string &str, const char delimiter)
+vector<string> Estructura_HDD::split(const string &str, const char delimiter)
     {
         vector<string> tokens;
         int start = 0;
@@ -168,12 +201,12 @@ struct Estructura_HDD
         return tokens;
     }
 
-    vector<string> elementos_registros(string linea)
+vector<string> Estructura_HDD::elementos_registros(string linea)
     {
         return split(linea, '#');
     }
 
-    vector<string> elementos_registros2(string linea)
+vector<string> Estructura_HDD::elementos_registros2(string linea)
     {
         vector<string> elementos;
         stringstream ss(linea);
@@ -190,7 +223,7 @@ struct Estructura_HDD
         return elementos;
     }
 
-    Estructura_HDD(string direccion_disco, string direccion_metadata, int cant_platos_por_disco, int cant_pistas_por_cara, int cant_bloques_por_pista, int bytes_por_bloque)
+Estructura_HDD::Estructura_HDD(string direccion_disco, string direccion_metadata, int cant_platos_por_disco, int cant_pistas_por_cara, int cant_bloques_por_pista, int bytes_por_bloque)
     {
         this->nombre_disco = direccion_disco;
         ifstream archivo(direccion_metadata);
@@ -257,7 +290,7 @@ struct Estructura_HDD
         unirBloquesLigados();
     }
 
-    void unirBloquesLigados(){
+void Estructura_HDD::unirBloquesLigados(){
         for(auto& plato : HDD.vector_espacios_hdd){
             for(auto& pista : plato.vector_espacios_hdd){
                 for(auto& bloque : pista.vector_espacios_hdd){
@@ -272,9 +305,7 @@ struct Estructura_HDD
         }
     }
 
-    // ---------------------------------------- Ocupar bloques disponibles -----------------------------------------------------
-    
-    Espacio_HDD& encontrarBloquePorID(string id_bloque){ //Funciona Ok
+Espacio_HDD& Estructura_HDD::encontrarBloquePorID(string id_bloque){ //Funciona Ok
         for(auto& plato : HDD.vector_espacios_hdd){
             for(auto& pista : plato.vector_espacios_hdd){
                 for(auto& bloque : pista.vector_espacios_hdd){
@@ -287,20 +318,20 @@ struct Estructura_HDD
         return Espacio_HDD_no_encontrado;
     }
 
-    void unirBloques(Espacio_HDD& A, Espacio_HDD& B){ //Funciona Ok
+void Estructura_HDD::unirBloques(Espacio_HDD& A, Espacio_HDD& B){ //Funciona Ok
         A.siguiente = &B;
         B.anterior = &A;
         cout<<"Se ligo el bloque "<<B.anterior->direccion<<" con el Bloque"<<A.siguiente->direccion<<endl;
     }
 
-    void bloquesLigados(string id_A, string id_B){ //Funciona Ok
+void Estructura_HDD::bloquesLigados(string id_A, string id_B){ //Funciona Ok
         unirBloques(
             encontrarBloquePorID(id_A),
             encontrarBloquePorID(id_B)
         );
     }
 
-    Espacio_HDD& encontrarPrimerBloqueVacio() { //Funciona Ok
+Espacio_HDD& Estructura_HDD::encontrarPrimerBloqueVacio() { //Funciona Ok
         for (auto& plato : HDD.vector_espacios_hdd) {
             for (auto& pista : plato.vector_espacios_hdd){
                 for (auto& bloque : pista.vector_espacios_hdd){
@@ -313,16 +344,16 @@ struct Estructura_HDD
         return Espacio_HDD_no_encontrado;
     }
 
-    void llenarBloque(string id,int capacidad){
+void Estructura_HDD::llenarBloque(string id,int capacidad){
         encontrarBloquePorID(id).capacidad_usada = capacidad;
     }
 
-    void agregarTextoaID(string texto, string id_bloque){
+void Estructura_HDD::agregarTextoaID(string texto, string id_bloque){
         Espacio_HDD& Bloque = encontrarBloquePorID(id_bloque);
         insertarTextoABloque(texto,Bloque);
     }
 
-    void insertarTextoABloque(string texto,Espacio_HDD& Bloque){
+void Estructura_HDD::insertarTextoABloque(string texto,Espacio_HDD& Bloque){
         const int capacidad_disponible = Bloque.capacidad_total - Bloque.capacidad_usada;
         const int capacidad_a_ingresar = texto.size();
         const string direccion = Bloque.direccion;
@@ -354,5 +385,3 @@ struct Estructura_HDD
             }
         }
     }
-
-};
