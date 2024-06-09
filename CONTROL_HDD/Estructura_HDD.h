@@ -125,12 +125,13 @@ struct Estructura_HDD
     void crearArchivoMetadatos(string nombre_archivo)
     {
         const string direccion = nombre_disco + "/" + nombre_archivo + ".txt";
+        cout<<direccion<<endl;
         ofstream archivo_m(direccion.c_str());
         if (archivo_m.is_open())
         {
             const string cabecera = nombre_archivo + "#id#str#direccion#str#espacio_disponible#int#espacio_usado#int#bloque_ligado#str\n";
             archivo_m << cabecera;
-
+            cout<<"Se entró a metadata";
             HDD.calcularCapacidadTotal();
             HDD.calcularEspacioUsado();
             HDD.setNodosEspacio();
@@ -191,6 +192,7 @@ struct Estructura_HDD
 
     Estructura_HDD(string direccion_disco, string direccion_metadata, int cant_platos_por_disco, int cant_pistas_por_cara, int cant_bloques_por_pista, int bytes_por_bloque)
     {
+        this->nombre_disco = direccion_disco;
         ifstream archivo(direccion_metadata);
         string linea;
         getline(archivo, linea);
@@ -311,9 +313,9 @@ struct Estructura_HDD
         return Espacio_HDD_no_encontrado;
     }
 
-    /*void llenarBloque(string id,int capacidad){
+    void llenarBloque(string id,int capacidad){
         encontrarBloquePorID(id).capacidad_usada = capacidad;
-    }*/
+    }
 
     void agregarTextoaID(string texto, string id_bloque){
         Espacio_HDD& Bloque = encontrarBloquePorID(id_bloque);
