@@ -44,7 +44,7 @@ struct Estructura_HDD
     Espacio_HDD& getReferenciaBloquePorID(string id_bloque);
     void enlazarBloques(Espacio_HDD& A, Espacio_HDD& B);
     void enlazarBloquesPorID(string id_A, string id_B);
-    Espacio_HDD& encontrarPrimerBloqueVacioDisponible();
+    Espacio_HDD& getReferenciaPrimerBloqueVacioDisponible();
     void llenarBloque(string id,int capacidad);
     void insertarTextoABloquePorID(string texto, string id_bloque);
     void insertarTextoABloque(string texto,Espacio_HDD& Bloque);
@@ -331,7 +331,7 @@ void Estructura_HDD::enlazarBloquesPorID(string id_A, string id_B){ //Funciona O
         );
     }
 
-Espacio_HDD& Estructura_HDD::encontrarPrimerBloqueVacioDisponible() { //Funciona Ok
+Espacio_HDD& Estructura_HDD::getReferenciaPrimerBloqueVacioDisponible() { //Funciona Ok
         for (auto& plato : HDD.vector_espacios_hdd) {
             for (auto& pista : plato.vector_espacios_hdd){
                 for (auto& bloque : pista.vector_espacios_hdd){
@@ -370,7 +370,7 @@ void Estructura_HDD::insertarTextoABloque(string texto,Espacio_HDD& Bloque){
             }
             if(Bloque.siguiente == nullptr){
                 cout<<"No hay bloque ligado"<<endl;
-                enlazarBloques(Bloque,encontrarPrimerBloqueVacioDisponible());
+                enlazarBloques(Bloque,getReferenciaPrimerBloqueVacioDisponible());
                 cout<<"Bloque ligadazo";
             }
             insertarTextoABloque(texto_b,*Bloque.siguiente);
