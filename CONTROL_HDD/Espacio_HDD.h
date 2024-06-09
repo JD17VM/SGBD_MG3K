@@ -79,4 +79,8 @@ struct Espacio_HDD
             }
         }
     }
+
+    void resetearNodosEspacio(){
+        this->nodos_espacio.clear();
+    }
 };

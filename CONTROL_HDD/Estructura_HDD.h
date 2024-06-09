@@ -181,6 +181,7 @@ void Estructura_HDD::crearArchivoMetadatos(string nombre_archivo)
             archivo_m << cabecera;
             cout<<"Se entró a metadata";
             resetCapacidadesNivel_0_1_2();
+            HDD.resetearNodosEspacio();
             HDD.calcularCapacidadTotal();
             HDD.calcularEspacioUsado();
             HDD.setNodosEspacio();
