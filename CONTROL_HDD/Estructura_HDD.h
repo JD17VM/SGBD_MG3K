@@ -48,6 +48,19 @@ struct Estructura_HDD
     void llenarBloque(string id,int capacidad);
     void insertarTextoABloquePorID(string texto, string id_bloque);
     void insertarTextoABloque(string texto,Espacio_HDD& Bloque);
+
+    void resetCapacidadesNivel_0_1_2(){
+        HDD.capacidad_total = 0;
+        HDD.capacidad_usada = 0;
+        for (auto &espacio : HDD.vector_espacios_hdd){
+            espacio.capacidad_total = 0;
+            espacio.capacidad_usada = 0;
+            for (auto &espacio_2 : espacio.vector_espacios_hdd){
+                espacio_2.capacidad_total = 0;
+                espacio_2.capacidad_usada = 0;
+            }
+        }
+    }
     
 };
 
@@ -167,6 +180,7 @@ void Estructura_HDD::crearArchivoMetadatos(string nombre_archivo)
             const string cabecera = nombre_archivo + "#id#str#direccion#str#espacio_disponible#int#espacio_usado#int#bloque_ligado#str\n";
             archivo_m << cabecera;
             cout<<"Se entró a metadata";
+            resetCapacidadesNivel_0_1_2();
             HDD.calcularCapacidadTotal();
             HDD.calcularEspacioUsado();
             HDD.setNodosEspacio();

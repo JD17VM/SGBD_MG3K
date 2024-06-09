@@ -26,7 +26,8 @@ int main()
         bytes_por_bloque
     );
 
-    E.crearCarpetasArchivos();
+    E.crearDirectoriosYArchivos();
+    E.crearArchivoMetadatos("metadata");
     E.crearArchivoMetadatos("metadata");*/
 
     /*for(string texto: E.HDD.listadoDeDireccionesHijos()){
@@ -38,6 +39,9 @@ int main()
     E.crearArchivoMetadatos("metadata2s");
     E.llenarBloque("HP01AP01A01",20);
     E.crearArchivoMetadatos("metadata2s");
+    E.llenarBloque("HP01AP01A03",20);
+    E.crearArchivoMetadatos("metadata2s");
+    E.llenarBloque("HP02AP02A02",20);
     E.crearArchivoMetadatos("metadata2s");
     //E.llenarBloque("HP01AP02A01",20);
 
