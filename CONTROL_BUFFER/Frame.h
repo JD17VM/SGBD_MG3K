@@ -10,12 +10,15 @@ struct Frame{
     bool dirty;
     int lastUsedCount;
 
+    bool bit_de_uso_CLOCK;
+
     Frame(string direccion_frame){
         this->direccion_frame = direccion_frame;
         this->pin_count = 0;
         this->dirty = false;
         this->bloque = nullptr;
         this->lastUsedCount = 0;
+        this->bit_de_uso_CLOCK = false;
     }
 
     void setDirty(bool dirty){
@@ -69,6 +72,11 @@ struct Frame{
         this->dirty = false;
         this->bloque = nullptr;
         this->lastUsedCount = 0;
+    }
+
+
+    void setbitDeUsoCLOCK(bool n){
+        this->bit_de_uso_CLOCK = n;
     }
 
 };
