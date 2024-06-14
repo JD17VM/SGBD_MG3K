@@ -61,5 +61,42 @@ CREATE TABLE ejemplo (
 
 
 
+## **Políticas de Reemplazo**
+
+### **Proceso de Evaluación LRU y MRU en un Buffer Pool**
+
+#### 1. Identificación de Frames Pinneados:
+
+- **Frames Pinneados:** Son aquellos que están actualmente en uso por alguna transacción y, por lo tanto, no se pueden reemplazar.
+- **Acción:** Se descartan estos frames de la evaluación LRU.
+
+#### 2. Identificación de Frames Dirty:
+
+- **Frames Dirty:** Son aquellos que han sido modificados pero aún no han sido escritos de vuelta al disco.
+- **Acción:** Se descartan temporalmente de la evaluación de *políticia de reemplazo*, ya que escribir en disco puede ser costoso en términos de tiempo.
+
+#### 3-A .Evaluación LRU:
+
+- **Proceso:** Entre los frames restantes (ni pinneados ni dirty), se aplica la política LRU para identificar cuál de ellos ha sido menos utilizado recientemente.
+- **Acción:** El frame seleccionado es reemplazado con la nueva página que se requiere cargar en el buffer pool.
+
+#### 3-B .Evaluación MRU:
+
+- **Proceso:** Entre los frames restantes (ni pinneados ni dirty), se aplica la política MRU para identificar cuál de ellos ha sido utilizado recientemente.
+- **Acción:** El frame seleccionado es reemplazado con la nueva página que se requiere cargar en el buffer pool.
 
 
+### **Casos Especiales**
+
+#### Todos los Frames están Pinneados:
+
+- **Acción:** Las solicitudes al buffer pool se bloquean y se espera a que alguno de los frames se libere (unpinned).
+
+#### Todos los Frames están Pinneados o Dirty:
+
+- **Acción:** Se aplica el proceso de LRU entre los frames dirty.
+- **Proceso de Flushing:** El frame dirty seleccionado por LRU se escribe en disco (flushing).
+- **Reemplazo:** Una vez que el frame dirty ha sido escrito en disco, se puede reemplazar con la nueva página.
+
+#### LRU - Todos los Frames están Pinneados o Dirty excepto el más reciente:
+- **Acción:** Se aplica el proceso de LRU entre los frames dirty.

@@ -21,9 +21,10 @@ void esperarTecla() {
 }
 
 void mostrarMenuInicial(){
-    cout << "== MENÚ INICIAL ==" << endl;
+    cout << "== MENU INICIAL ==" << endl;
     cout << "1. Llamar a Bloque" << endl;
     cout << "2. Flush Frames" << endl;
+    cout << "3. Unpin Fram" << endl;
     cout << "0. Salir" << endl;
     cout << "==================" << endl;
 }
@@ -33,9 +34,21 @@ void mostrarMenuFlush() {
     cout << "1. Frame_1" << endl;
     cout << "2. Frame_2" << endl;
     cout << "3. Frame_3" << endl;
+    cout << "4. Frame_4" << endl;
     cout << "0. Salir" << endl;
     cout << "==================" << endl;
 }
+
+void mostrarMenuUnpin() {
+    cout << "== UNPIN FRAMES ==" << endl;
+    cout << "1. Frame_1" << endl;
+    cout << "2. Frame_2" << endl;
+    cout << "3. Frame_3" << endl;
+    cout << "4. Frame_4" << endl;
+    cout << "0. Salir" << endl;
+    cout << "==================" << endl;
+}
+
 
 void mostrarMenuLW(){
     cout << "== LECTURA O ESCRITURA ==" << endl;
@@ -58,7 +71,7 @@ void mostrarMenuBloques() {
 }
 
 int main(){
-    Buffer_Manager p(3);
+    Buffer_Manager p(4);
     bool salir = false;
 
     while(!salir) {
@@ -67,7 +80,7 @@ int main(){
         mostrarMenuInicial();
 
         int opcionInicial;
-        cout << "Selecciona una opción: ";
+        cout << "Selecciona una opcion: ";
         cin >> opcionInicial;
 
         switch(opcionInicial) {
@@ -103,7 +116,7 @@ int main(){
                         case 4: direccionBloque = "Bloques/BLOQUE_04.txt"; break;
                         case 5: direccionBloque = "Bloques/BLOQUE_05.txt"; break;
                         case 6: direccionBloque = "Bloques/BLOQUE_06.txt"; break;
-                        default: cout << "Opción inválida. Intenta de nuevo." << endl; esperarTecla(); continue;
+                        default: cout << "Opcion invalida. Intenta de nuevo." << endl; esperarTecla(); continue;
                     }
 
                     p.llamarABloque(direccionBloque, opcionLW);
@@ -127,21 +140,48 @@ int main(){
                         continue;
                     }
 
-                    if (opcionFlush >= 1 && opcionFlush <= 3) {
+                    if (opcionFlush >= 1 && opcionFlush <= 4) {
                         p.flushFrame(opcionFlush - 1);
                         cout << "Flush realizado en Frame_" << opcionFlush << "." << endl;
                     } else {
-                        cout << "Opción inválida. Intenta de nuevo." << endl;
+                        cout << "Opcion inválida. Intenta de nuevo." << endl;
                     }
                     esperarTecla();
                 }
                 break;
             }
+
+            case 3:{
+                bool subMenuSalir = false;
+                while(!subMenuSalir) {
+                    limpiarPantalla();
+                    mostrarMenuUnpin();
+
+                    int opcionUnpin;
+                    cout << "Selecciona un frame para hacer despinnear: ";
+                    cin >> opcionUnpin;
+
+                    if (opcionUnpin == 0) {
+                        subMenuSalir = true;
+                        continue;
+                    }
+
+                    if (opcionUnpin >= 1 && opcionUnpin <= 4) {
+                        p.unPinFrame(opcionUnpin - 1);
+                        cout << "Unpin realizado en Frame_" << opcionUnpin << "." << endl;
+                    } else {
+                        cout << "Opcion inválida. Intenta de nuevo." << endl;
+                    }
+                    esperarTecla();
+                }
+                break;
+            }
+
             case 0:
                 salir = true;
                 break;
             default:
-                cout << "Opción inválida. Intenta de nuevo." << endl;
+                cout << "Opcion invalida. Intenta de nuevo." << endl;
                 esperarTecla();
                 break;
         }
