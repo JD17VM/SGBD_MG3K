@@ -35,6 +35,7 @@ void mostrarMenuFlush() {
     cout << "2. Frame_2" << endl;
     cout << "3. Frame_3" << endl;
     cout << "4. Frame_4" << endl;
+    cout << "5. Frame_5" << endl;
     cout << "0. Salir" << endl;
     cout << "==================" << endl;
 }
@@ -45,6 +46,7 @@ void mostrarMenuUnpin() {
     cout << "2. Frame_2" << endl;
     cout << "3. Frame_3" << endl;
     cout << "4. Frame_4" << endl;
+    cout << "5. Frame_5" << endl;
     cout << "0. Salir" << endl;
     cout << "==================" << endl;
 }
@@ -71,7 +73,7 @@ void mostrarMenuBloques() {
 }
 
 int main(){
-    Buffer_Manager p(4);
+    Buffer_Manager p(5);
     bool salir = false;
 
     while(!salir) {
