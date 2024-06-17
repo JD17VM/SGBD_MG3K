@@ -51,27 +51,15 @@ void Buffer_Manager::imprimirEstado()
     for (const auto &frame : Buffer_Pool)
     {
         cout << acomodarTexto(frame.direccion_frame, 12) << " : "
-             << (frame.bloque ? acomodarTexto(frame.bloque->direccion_bloque, 8) : "N/A      ")
-             << " - pin: " << frame.pin_count
-             << " - LUCount: " << frame.lastUsedCount
-             << " Dirty: ";
-        if (frame.dirty == true)
-        {
-            cout << "si";
-        }
-        else if (frame.dirty == false)
-        {
-            cout << "no";
-        }
-        cout << " - BIT: ";
-        if (frame.bit_de_uso_CLOCK == true)
-        {
-            cout << "1";
-        }
-        else if (frame.bit_de_uso_CLOCK == false)
-        {
-            cout << "0";
-        }
+            << (frame.bloque ? acomodarTexto(frame.bloque->direccion_bloque, 8) : "N/A      ");
+            if(frame.bloque){
+                cout << " - pin: " << frame.pin_count
+                << " - LUCount: " << frame.lastUsedCount
+                << " - Dirty: " << (frame.dirty ? "si" : "no")
+                << " - BIT: " << (frame.bit_de_uso_CLOCK ? "1" : "0")
+                << " - Cola: ";  frame.imprimirColaDeRequerimientos();
+            }
+
         cout << endl;
     }
     cout << endl;
@@ -200,34 +188,7 @@ string Buffer_Manager::comprobarEstadoDeTodosLosFrames()
     return "L";
 }
 
-/*int Buffer_Manager::posicionRecientementeMenosUsadoLRUMasOtrasEvaluaciones() {
-    int pos = -1;
-    int minLastUsedCount = INT_MAX;
-    const string estado_frames = comprobarEstadoDeTodosLosFrames();
 
-    if(estado_frames != "P"){
-        if(estado_frames == "PD" || estado_frames == "PDR"){
-            for (int i = 0; i < Buffer_Pool.size(); i++) {
-                if (Buffer_Pool[i].lastUsedCount < minLastUsedCount && Buffer_Pool[i].dirty && Buffer_Pool[i].pin_count == 0)
-                {
-                    minLastUsedCount = Buffer_Pool[i].lastUsedCount;
-                    cout<<"Frame Flusheado"<<endl;
-                    pos = i;
-                }
-            }
-        }else if(estado_frames == "L"){
-            for (int i = 0; i < Buffer_Pool.size(); i++) {
-                if (Buffer_Pool[i].pin_count == 0 && Buffer_Pool[i].dirty == false && Buffer_Pool[i].lastUsedCount < minLastUsedCount)
-                {
-                    minLastUsedCount = Buffer_Pool[i].lastUsedCount;
-                    pos = i;
-                }
-            }
-        }
-    }
-
-    return pos;
-}*/
 
 int Buffer_Manager::posicionRecientementeMenosUsadoLRUMasOtrasEvaluaciones()
 {
@@ -352,56 +313,6 @@ int Buffer_Manager::posicionRecientementeMasUsadoMRUMasOtrasEvaluaciones()
     return posicion;
 }
 
-// CHEQUEAR
-/*int Buffer_Manager::posicionRecientementeMasUsadoMRUMasOtrasEvaluaciones() {
-    int pos = -1;
-    int maxLastUsedCount = -1;
-    const string estado_frames = comprobarEstadoDeTodosLosFrames();
-
-    if(estado_frames != "P"){
-        if(estado_frames == "PD"){
-            for (int i = 0; i < Buffer_Pool.size(); i++) {
-                if (Buffer_Pool[i].lastUsedCount > maxLastUsedCount && Buffer_Pool[i].dirty)
-                {
-                    maxLastUsedCount = Buffer_Pool[i].lastUsedCount;
-                    cout<<"Frame Flusheado"<<endl;
-                    pos = i;
-                }
-            }
-        }else if(estado_frames == "PDR" || estado_frames == "L"){
-            for (int i = 0; i < Buffer_Pool.size(); i++) {
-                if (Buffer_Pool[i].pin_count == 0 && Buffer_Pool[i].dirty == false && Buffer_Pool[i].lastUsedCount > maxLastUsedCount)
-                {
-                    maxLastUsedCount = Buffer_Pool[i].lastUsedCount;
-                    pos = i;
-                }
-            }
-        }
-    }
-
-    return pos;
-}*/
-
-/*int Buffer_Manager::posicionPrimerFrameNoPinneadoCLOCK(){
-    int size = Buffer_Pool.size();
-    for(int i=0; i<size; i++){
-        if(!ptr_clock->bit_de_uso_CLOCK){
-            ptr_clock->setbitDeUsoCLOCK(true);
-            int pos = ptr_clock - &Buffer_Pool[0];
-            ptr_clock++;
-            if (ptr_clock == &Buffer_Pool[0] + size){
-                ptr_clock = &Buffer_Pool[0];
-            }
-            return pos;
-        }
-        ptr_clock->setbitDeUsoCLOCK(false);
-        ptr_clock++;
-        if (ptr_clock == &Buffer_Pool[0] + size){
-            ptr_clock = &Buffer_Pool[0];
-        }
-    }
-    return -1;
-}*/
 
 int Buffer_Manager::posicionPrimerFrameNoPinneadoClock()
 {
@@ -487,14 +398,6 @@ int Buffer_Manager::posicionPrimerFrameNoPinneadoClock()
     return -1;
 }
 
-/*void Buffer_Manager::actualizarPinCounts(int exceptIndex) {
-    for (int i = 0; i < Buffer_Pool.size(); i++) {
-        if (i != exceptIndex && Buffer_Pool[i].pin_count > 0) {
-            Buffer_Pool[i].unPinPage();
-        }
-    }
-}*/
-
 void Buffer_Manager::flushFrame(int posicion)
 {
     Buffer_Pool[posicion].flushing();
@@ -512,12 +415,12 @@ void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
     {
         // El bloque ya existe en el buffer, incrementar pin_count y actualizar lastUsedCount
         Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
-        Buffer_Pool[pos].pinPage();
+        Buffer_Pool[pos].pinPage(indicadorLW);
         Buffer_Pool[pos].setbitDeUsoCLOCK(true);
-        if (indicadorLW == 'W')
+        /*if (indicadorLW == 'W')
         {
             Buffer_Pool[pos].setDirty(true);
-        }
+        }*/
         cout << "Bloque ya existe en el buffer: " << direccion_bloque << endl;
     }
     else
@@ -531,12 +434,12 @@ void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
                 shared_ptr<Bloque> newBloque = make_shared<Bloque>(direccion_bloque);
                 Buffer_Pool[pos].setBloque(newBloque);
                 Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
-                Buffer_Pool[pos].pinPage();
+                Buffer_Pool[pos].pinPage(indicadorLW);
                 Buffer_Pool[pos].setbitDeUsoCLOCK(true);
-                if (indicadorLW == 'W')
+                /*if (indicadorLW == 'W')
                 {
                     Buffer_Pool[pos].setDirty(true);
-                }
+                }*/
                 vector_Bloques.push_back(newBloque);
             }
         }
@@ -549,12 +452,12 @@ void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
                 shared_ptr<Bloque> newBloque = make_shared<Bloque>(direccion_bloque);
                 Buffer_Pool[pos].setBloque(newBloque);
                 Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
-                Buffer_Pool[pos].pinPage();
+                Buffer_Pool[pos].pinPage(indicadorLW);
                 Buffer_Pool[pos].setbitDeUsoCLOCK(true);
-                if (indicadorLW == 'W')
+                /*if (indicadorLW == 'W')
                 {
                     Buffer_Pool[pos].setDirty(true);
-                }
+                }*/
                 vector_Bloques.push_back(newBloque);
             }
             else

@@ -12,6 +12,8 @@ struct Frame{
 
     bool bit_de_uso_CLOCK;
 
+    vector<char> cola_de_requerimientos;
+
     Frame(string direccion_frame){
         this->direccion_frame = direccion_frame;
         this->pin_count = 0;
@@ -25,13 +27,27 @@ struct Frame{
         this->dirty = dirty;
     }
 
-    void pinPage(){
+    void pinPage(char indicadorLW){
         this->pin_count++;
+        this->cola_de_requerimientos.push_back(indicadorLW);
+
+        if(this->cola_de_requerimientos[0] == 'W'){
+            setDirty(true);
+        }else if(this->cola_de_requerimientos[0] == 'L'){
+            setDirty(false);
+        }
     }
 
     void unPinPage(){
         if(this->pin_count){
             this->pin_count--;
+            this->cola_de_requerimientos.erase(cola_de_requerimientos.begin());
+
+            if(this->cola_de_requerimientos[0] == 'W'){
+                setDirty(true);
+            }else if(this->cola_de_requerimientos[0] == 'L'){
+                setDirty(false);
+            }
         }
     }
 
@@ -77,6 +93,16 @@ struct Frame{
 
     void setbitDeUsoCLOCK(bool n){
         this->bit_de_uso_CLOCK = n;
+    }
+
+
+
+    void imprimirColaDeRequerimientos() const{
+        if(this->cola_de_requerimientos.size() > 0){
+            for(char solicitud: this->cola_de_requerimientos){
+                cout<<solicitud<<"-";
+            }
+        }
     }
 
 };

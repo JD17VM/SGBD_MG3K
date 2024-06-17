@@ -23,8 +23,8 @@ void esperarTecla() {
 void mostrarMenuInicial(){
     cout << "== MENU INICIAL ==" << endl;
     cout << "1. Llamar a Bloque" << endl;
-    cout << "2. Flush Frames" << endl;
-    cout << "3. Unpin Fram" << endl;
+    cout << "2. Flush Frame" << endl;
+    cout << "3. Unpin Frame" << endl;
     cout << "0. Salir" << endl;
     cout << "==================" << endl;
 }
@@ -90,6 +90,7 @@ int main(){
                 bool subMenuSalir = false;
                 while(!subMenuSalir) {
                     limpiarPantalla();
+                    p.imprimirEstado();
                     mostrarMenuLW();
 
                     char opcionLW;
@@ -97,6 +98,7 @@ int main(){
                     cin >> opcionLW;
 
                     limpiarPantalla();
+                    p.imprimirEstado();
                     mostrarMenuBloques();
 
                     cout<<"La letra que se envia es: "<<opcionLW<<endl;
@@ -121,9 +123,10 @@ int main(){
                         default: cout << "Opcion invalida. Intenta de nuevo." << endl; esperarTecla(); continue;
                     }
 
+                    limpiarPantalla();
                     p.llamarABloque(direccionBloque, opcionLW);
-                    p.imprimirEstado();
-                    esperarTecla();
+                    //p.imprimirEstado();
+                    //esperarTecla();
                 }
                 break;
             }
@@ -131,6 +134,7 @@ int main(){
                 bool subMenuSalir = false;
                 while(!subMenuSalir) {
                     limpiarPantalla();
+                    p.imprimirEstado();
                     mostrarMenuFlush();
 
                     int opcionFlush;
@@ -157,6 +161,7 @@ int main(){
                 bool subMenuSalir = false;
                 while(!subMenuSalir) {
                     limpiarPantalla();
+                    p.imprimirEstado();
                     mostrarMenuUnpin();
 
                     int opcionUnpin;
