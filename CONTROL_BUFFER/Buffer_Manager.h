@@ -405,7 +405,7 @@ void Buffer_Manager::flushFrame(int posicion)
 
 void Buffer_Manager::unPinFrame(int posicion)
 {
-    Buffer_Pool[posicion].unPinPage();
+    Buffer_Pool[posicion].liberarRequerimiento();
 }
 
 void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
@@ -415,7 +415,8 @@ void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
     {
         // El bloque ya existe en el buffer, incrementar pin_count y actualizar lastUsedCount
         Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
-        Buffer_Pool[pos].pinPage(indicadorLW);
+        //Buffer_Pool[pos].pinPage(indicadorLW);
+        Buffer_Pool[pos].llamarRequerimiento(indicadorLW);
         Buffer_Pool[pos].setbitDeUsoCLOCK(true);
         /*if (indicadorLW == 'W')
         {
@@ -434,7 +435,7 @@ void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
                 shared_ptr<Bloque> newBloque = make_shared<Bloque>(direccion_bloque);
                 Buffer_Pool[pos].setBloque(newBloque);
                 Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
-                Buffer_Pool[pos].pinPage(indicadorLW);
+                Buffer_Pool[pos].llamarRequerimiento(indicadorLW);
                 Buffer_Pool[pos].setbitDeUsoCLOCK(true);
                 /*if (indicadorLW == 'W')
                 {
@@ -452,7 +453,7 @@ void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
                 shared_ptr<Bloque> newBloque = make_shared<Bloque>(direccion_bloque);
                 Buffer_Pool[pos].setBloque(newBloque);
                 Buffer_Pool[pos].setLastUsedCount(++useCounter); // Actualizar el contador de uso
-                Buffer_Pool[pos].pinPage(indicadorLW);
+                Buffer_Pool[pos].llamarRequerimiento(indicadorLW);
                 Buffer_Pool[pos].setbitDeUsoCLOCK(true);
                 /*if (indicadorLW == 'W')
                 {

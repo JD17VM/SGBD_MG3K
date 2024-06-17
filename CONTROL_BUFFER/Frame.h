@@ -12,6 +12,7 @@ struct Frame{
 
     bool bit_de_uso_CLOCK;
 
+    char estado_requerimiento_actual;
     vector<char> cola_de_requerimientos;
 
     Frame(string direccion_frame){
@@ -27,8 +28,22 @@ struct Frame{
         this->dirty = dirty;
     }
 
-    void pinPage(char indicadorLW){
-        this->pin_count++;
+    void actualizarEstadoRequerimientoActual(){
+        if(this->cola_de_requerimientos.size() > 0){
+            this->estado_requerimiento_actual = this->cola_de_requerimientos[0];
+            int contador_pin = 0;
+            for(char solicitud: this->cola_de_requerimientos){
+                if(solicitud == 'L'){
+                    contador_pin++;
+                }else{
+                    break;
+                }
+            }
+            pin_count = contador_pin;
+        }
+    }
+
+    void llamarRequerimiento(char indicadorLW){
         this->cola_de_requerimientos.push_back(indicadorLW);
 
         if(this->cola_de_requerimientos[0] == 'W'){
@@ -36,11 +51,12 @@ struct Frame{
         }else if(this->cola_de_requerimientos[0] == 'L'){
             setDirty(false);
         }
+
+        establecerPinCountEnBaseARequerimientos();
     }
 
-    void unPinPage(){
-        if(this->pin_count){
-            this->pin_count--;
+    void liberarRequerimiento(){
+        if(this->cola_de_requerimientos[0]){
             this->cola_de_requerimientos.erase(cola_de_requerimientos.begin());
 
             if(this->cola_de_requerimientos[0] == 'W'){
@@ -49,7 +65,40 @@ struct Frame{
                 setDirty(false);
             }
         }
+        else{
+            this->pin_count = 0;
+        }
+
+        establecerPinCountEnBaseARequerimientos();
     }
+
+    void establecerPinCountEnBaseARequerimientos(){
+        if(this->cola_de_requerimientos[0]){
+            if(this->cola_de_requerimientos[0] == 'L'){
+            int contador_requerimientos_lectura = 0;
+            for(char requerimiento : this->cola_de_requerimientos){
+                if (requerimiento == 'L') contador_requerimientos_lectura++;
+                else break;
+            }
+            this->pin_count = contador_requerimientos_lectura;
+            }else if(this->cola_de_requerimientos[0] == 'W'){
+                this->pin_count = 1;
+            } 
+        }else{
+            this->pin_count = 0;
+        }
+
+    }
+
+    /*void pinPage(){
+        this->pin_count++;
+    }
+
+    void unPinPage(){
+        if(this->pin_count){
+            this->pin_count--;
+        }
+    }*/
 
     void setBloque(shared_ptr<Bloque> bloque){
         this->bloque = bloque;
@@ -97,10 +146,32 @@ struct Frame{
 
 
 
-    void imprimirColaDeRequerimientos() const{
-        if(this->cola_de_requerimientos.size() > 0){
-            for(char solicitud: this->cola_de_requerimientos){
-                cout<<solicitud<<"-";
+    void imprimirColaDeRequerimientos() const {
+        if (this->cola_de_requerimientos.size() > 0) {
+            if (this->cola_de_requerimientos[0] == 'L') {
+                int indice_de_vector = -1;
+                cout << "En ejecucion: ";
+                for (int i = 0; i < this->cola_de_requerimientos.size(); i++) {
+                    if (this->cola_de_requerimientos[i] == 'L') {
+                        if (i > 0) cout << " - ";
+                        cout << this->cola_de_requerimientos[i];
+                    } else {
+                        indice_de_vector = i;
+                        break;
+                    }
+                }
+                cout << ", En cola: ";
+                for (int j = indice_de_vector; j < this->cola_de_requerimientos.size(); j++) {
+                    if (j > indice_de_vector) cout << " - ";
+                    cout << this->cola_de_requerimientos[j];
+                }
+            } else if (this->cola_de_requerimientos[0] == 'W') {
+                cout << "En ejecucion: " << this->cola_de_requerimientos[0];
+                cout << ", En cola: ";
+                for (int i = 1; i < this->cola_de_requerimientos.size(); i++) {
+                    if (i > 1) cout << " - ";
+                    cout << this->cola_de_requerimientos[i];
+                }
             }
         }
     }
