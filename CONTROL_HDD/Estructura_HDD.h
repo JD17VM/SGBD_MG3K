@@ -23,7 +23,8 @@ struct Estructura_HDD
         char caras_a, char caras_b,
         string nombre_pistas, int cant_pistas_por_cara,
         string nombre_bloques, int cant_bloques_por_pista,
-        int bytes_por_bloque);
+        int bytes_por_bloque,
+        string nombre_archivo_metadata);
 
     Estructura_HDD(
         string direccion_disco,
@@ -64,7 +65,7 @@ struct Estructura_HDD
     }
 };
 
-Estructura_HDD::Estructura_HDD(string nombre_disco, string nombre_platos, int cant_platos_por_disco, char caras_a, char caras_b, string nombre_pistas, int cant_pistas_por_cara, string nombre_bloques, int cant_bloques_por_pista, int bytes_por_bloque)
+Estructura_HDD::Estructura_HDD(string nombre_disco, string nombre_platos, int cant_platos_por_disco, char caras_a, char caras_b, string nombre_pistas, int cant_pistas_por_cara, string nombre_bloques, int cant_bloques_por_pista, int bytes_por_bloque, string nombre_archivo_metadata)
 {
     this->nombre_disco = nombre_disco;
     this->nombre_platos = nombre_platos;
@@ -146,9 +147,12 @@ Estructura_HDD::Estructura_HDD(string nombre_disco, string nombre_platos, int ca
         HDD.vector_espacios_hdd.push_back(PLATO_A);
         HDD.vector_espacios_hdd.push_back(PLATO_B);
     }
+
+    this->crearDirectoriosYArchivos();
+    this->crearArchivoMetadatos(nombre_archivo_metadata);
 }
 
-void Estructura_HDD::crearDirectoriosYArchivos()
+    void Estructura_HDD::crearDirectoriosYArchivos()
 {
     for (const string direccion : HDD.listadoDeDireccionesHijos())
     {
@@ -170,7 +174,7 @@ void Estructura_HDD::crearDirectoriosYArchivos()
     }
 }
 
-void Estructura_HDD::crearArchivoMetadatos(string nombre_archivo)
+    void Estructura_HDD::crearArchivoMetadatos(string nombre_archivo)
 {
     const string direccion = nombre_disco + "/" + nombre_archivo + ".txt";
     cout << direccion << endl;
@@ -199,6 +203,9 @@ void Estructura_HDD::crearArchivoMetadatos(string nombre_archivo)
         archivo_m.close();
     }
 }
+
+
+// --------------------------------------------------------------------------------------------
 
 vector<string> Estructura_HDD::split(const string &str, const char delimiter)
 {
