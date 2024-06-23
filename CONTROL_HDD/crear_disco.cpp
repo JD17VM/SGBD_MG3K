@@ -17,8 +17,8 @@ int main()
     int cantidad_pistas = 3;
     int cantidad_bloques = 3;
     int bytes_por_bloque = 100;
-
-    /*Estructura_HDD E(
+    /*
+    Estructura_HDD E(
         "HDD", 
         "PLATO", cantidad_platos, 'A', 'B', 
         "PISTA", cantidad_pistas, 
@@ -28,26 +28,30 @@ int main()
 
     E.crearDirectoriosYArchivos();
     E.crearArchivoMetadatos("metadata");
-    E.crearArchivoMetadatos("metadata");*/
+    //E.crearArchivoMetadatos("metadata");*/
 
     /*for(string texto: E.HDD.listadoDeDireccionesHijos()){
         cout<<texto<<endl;
     }*/
 
+    
     Estructura_HDD E("HDD","HDD/metadata.txt",cantidad_platos,cantidad_pistas,cantidad_bloques,bytes_por_bloque);
-    E.llenarBloque("HP01AP01A02",20);
-    E.crearArchivoMetadatos("metadata2s");
-    E.llenarBloque("HP01AP01A01",20);
-    E.crearArchivoMetadatos("metadata2s");
+    /*E.llenarBloque("HP01AP01A02",20);
+    E.crearArchivoMetadatos("metadata");
+    E.llenarBloque("HP01AP01A01",34);
+    E.crearArchivoMetadatos("metadata");
     E.llenarBloque("HP01AP01A03",20);
-    E.crearArchivoMetadatos("metadata2s");
-    E.llenarBloque("HP02AP02A02",20);
-    E.crearArchivoMetadatos("metadata2s");
+    E.crearArchivoMetadatos("metadata");
+    E.llenarBloque("HP02AP02A02",21);
+    E.crearArchivoMetadatos("metadata");*/
     //E.llenarBloque("HP01AP02A01",20);
 
-    /*E.agregarTextoaID("Este se un texto que tiene más de 100 caracteres, es importante considerar que en este caso debería a saltar de linea. A continuacion pongo el ejemplo de un nuevo texto que tiene problemas para solucionar, espero que funque","HP01AP01A01");
-    E.crearArchivoMetadatos("metadata");*/
+    E.insertarTextoABloquePorID("Este se un texto que tiene más de 100 caracteres, es importante considerar que en este caso debería a saltar de linea. A continuacion pongo el ejemplo de un nuevo texto que tiene problemas para solucionar, espero que funque","HP01AP01A01");
+    E.crearArchivoMetadatos("metadata");
+    
 
+    /*cout << "Espacio usado: " << disco.getEspacioUsado() << endl;
+    cout << "Espacio disponible: " << disco.getEspacioDisponible() << endl;*/
     /*E.HDD.setNodosEspacio();
     cout<<E.HDD.nodos_espacio.size();
     for(const auto &elemento : E.HDD.nodos_espacio){
