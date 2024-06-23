@@ -155,12 +155,13 @@ void Estructura_HDD::crearDirectoriosYArchivos()
         if (direccion[direccion.length() - 4] == '.')
         {
             ofstream archivo(direccion.c_str());
-            if (archivo.is_open())
+            /*if (archivo.is_open())
             {
                 const string espacios_vacios(bytes_por_bloque, '*');
                 archivo << espacios_vacios;
                 archivo.close();
-            }
+            }*/
+            
         }
         else
         {
