@@ -250,7 +250,7 @@ vector<string> Estructura_HDD::elementos_red(string linea)
 Estructura_HDD::Estructura_HDD(string direccion_disco, string direccion_metadata, int cant_platos_por_disco, int cant_pistas_por_cara, int cant_bloques_por_pista, int bytes_por_bloque)
 {
     this->nombre_disco = direccion_disco;
-    ifstream archivo(direccion_metadata);
+    ifstream archivo(direccion_disco + '/' + direccion_metadata);
     string linea;
     getline(archivo, linea);
     if (!archivo.is_open())
