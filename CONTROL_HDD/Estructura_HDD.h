@@ -191,7 +191,9 @@ void Estructura_HDD::crearArchivoMetadatos(string nombre_archivo)
             const string texto_tamanio_hijo = to_string(p->capacidad_total);
             const string texto_tamanio_hijo_usado = to_string(p->capacidad_usada);
             const string id_siguiente = p->id_siguiente_bloque;
-            archivo_m << texto_id_hijo << "#" << texto_direccion_hijo << "#" << texto_tamanio_hijo << "#" << texto_tamanio_hijo_usado << "#" << id_siguiente << endl;
+            archivo_m << texto_id_hijo << "#" << texto_direccion_hijo << "#" << texto_tamanio_hijo << "#" << texto_tamanio_hijo_usado << "#" 
+            << id_siguiente 
+             << endl;
         }
         archivo_m.close();
     }
@@ -346,15 +348,17 @@ void Estructura_HDD::enlazarBloques(Espacio_HDD &A, Espacio_HDD &B)
 { // Funciona Ok
     A.siguiente = &B;
     B.anterior = &A;
+    A.id_siguiente_bloque = B.id;
     cout << "Se ligo el bloque " << B.anterior->direccion << " con el Bloque" << A.siguiente->direccion << endl;
+    cout << "A id_siguiente_bloque " << A.id_siguiente_bloque << endl;
 }
 
-    void Estructura_HDD::enlazarBloquesPorID(string id_A, string id_B)
-    { // Funciona Ok
-        enlazarBloques(
-            getReferenciaBloquePorID(id_A),
-            getReferenciaBloquePorID(id_B));
-    }
+void Estructura_HDD::enlazarBloquesPorID(string id_A, string id_B)
+{ // Funciona Ok
+    enlazarBloques(
+    getReferenciaBloquePorID(id_A),
+    getReferenciaBloquePorID(id_B));
+}
 
 Espacio_HDD &Estructura_HDD::getReferenciaPrimerBloqueVacioDisponible()
 { // Funciona Ok
