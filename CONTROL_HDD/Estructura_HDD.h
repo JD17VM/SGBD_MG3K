@@ -379,8 +379,6 @@ Espacio_HDD &Estructura_HDD::getReferenciaPrimerBloqueVacioDisponible()
             {
                 if (bloque.tipo == "BLOQUE" && bloque.capacidad_usada == 0)
                 {
-                    cout<<"\t la capacidad usada de este bloque "<<bloque.direccion<<" es "<<bloque.capacidad_usada<<endl;
-                    cout<<"\t Este es la direccion de memoria del bloque que devuelve: "<<&bloque;
                     return bloque;
                 }
             }
@@ -392,7 +390,7 @@ Espacio_HDD &Estructura_HDD::getReferenciaPrimerBloqueVacioDisponible()
 
 
 //Prueba
-
+/*
 void Estructura_HDD::llenarBloque(string id, int capacidad)
 {
     getReferenciaBloquePorID(id).capacidad_usada = capacidad;
@@ -448,6 +446,7 @@ void Estructura_HDD::insertarTextoABloque(string texto, Espacio_HDD &Bloque)
     }
 }
 
+*/
 
 inline void agregarLineaDeRegistro(string linea_de_registro,ofstream& archivo_destino,int& cantidad_caracteres_disponibles_del_bloque){
     int tam_linea_de_registro = linea_de_registro.length();
@@ -477,20 +476,13 @@ void Estructura_HDD::leerCSVDeRegistrosEInsertarEnBloques(string direccion_archi
 
         while (getline(archivo, linea_de_registro)) {
             int tam_linea_de_registro = linea_de_registro.length(); // Corrección: Asignación correcta
-            cout<<"Este bloque tiene "<<cantidad_caracteres_disponibles_del_bloque<<" dispinibles y el tamanio del registro tiene "<<tam_linea_de_registro<<endl;
             if (cantidad_caracteres_disponibles_del_bloque >= tam_linea_de_registro) { // Corrección: Condición correcta
                 agregarLineaDeRegistro(linea_de_registro, archivo_bloque_destino, cantidad_caracteres_disponibles_del_bloque);
                 Bloque->capacidad_usada = Bloque->capacidad_total - cantidad_caracteres_disponibles_del_bloque;
             } else {
-                //cout << "Al bloque le quedan " << cantidad_caracteres_disponibles_del_bloque << " caracteres disponibles" << endl;
                 Bloque->capacidad_usada = Bloque->capacidad_total - cantidad_caracteres_disponibles_del_bloque;
-                cout<<"\t La capacidad usada que tiene el Bloque_A es: "<<Bloque->direccion<<"---"<<Bloque->capacidad_usada<<endl;
-                cout<<"\t Este es la direccion de memoria del bloque A que devuelve: "<<&Bloque;
                 Espacio_HDD* Bloque_B = &getReferenciaPrimerBloqueVacioDisponible();
-                cout<<"\t Este es la direccion de memoria del bloque B que devuelve: "<<&Bloque_B;
-
                 enlazarBloques(*Bloque, *Bloque_B);
-
                 // Actualizar referencia y archivo destino
                 Bloque = Bloque_B;
                 archivo_bloque_destino.close();
@@ -501,8 +493,6 @@ void Estructura_HDD::leerCSVDeRegistrosEInsertarEnBloques(string direccion_archi
                 Bloque->capacidad_usada = Bloque->capacidad_total - cantidad_caracteres_disponibles_del_bloque;
 
             }
-
-            cout<<"Ahora la capacidad usada del bloque es "<<Bloque->capacidad_usada<<endl;
         }
     }
 }
