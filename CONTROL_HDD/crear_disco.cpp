@@ -4,6 +4,7 @@
 #include <fstream>
 #include <windows.h>
 #include <iomanip> // Para std::setw
+#include <algorithm>
 #include "../megatron.h"
 #include "Espacio_HDD.h"
 #include "Estructura_HDD.h"

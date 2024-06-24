@@ -48,6 +48,7 @@ struct Estructura_HDD
     void insertarTextoABloquePorID(string texto, string id_bloque);
     void insertarTextoABloque(string texto, Espacio_HDD &Bloque);
     void leerCSVDeRegistrosEInsertarEnBloques(string direccion_archivo,string id_bloque);
+    inline void agregarLineaDeRegistro(string linea_de_registro,ofstream& archivo_destino,int& cantidad_caracteres_disponibles_del_bloque);
 
     void resetCapacidadesNivel_0_1_2()
     {
@@ -448,13 +449,15 @@ void Estructura_HDD::insertarTextoABloque(string texto, Espacio_HDD &Bloque)
 
 */
 
-inline void agregarLineaDeRegistro(string linea_de_registro,ofstream& archivo_destino,int& cantidad_caracteres_disponibles_del_bloque){
+inline void  Estructura_HDD::agregarLineaDeRegistro(string linea_de_registro,ofstream& archivo_destino,int& cantidad_caracteres_disponibles_del_bloque){
     int tam_linea_de_registro = linea_de_registro.length();
+    //const vector<string> vector_divido= split(linea_de_registro,',');
+    replace(linea_de_registro.begin(), linea_de_registro.end(), ',', '#');
     if (!archivo_destino.is_open()){
         cout<<"El archivo no se abrio en la funcion"<<endl;
     }else{
-        archivo_destino<<linea_de_registro;
         cantidad_caracteres_disponibles_del_bloque -= tam_linea_de_registro;
+        archivo_destino<<linea_de_registro<<"\n";
     }
 }
 
@@ -495,4 +498,5 @@ void Estructura_HDD::leerCSVDeRegistrosEInsertarEnBloques(string direccion_archi
             }
         }
     }
+    this->crearArchivoMetadatos("metadata");
 }
