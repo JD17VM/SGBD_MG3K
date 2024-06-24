@@ -1,1 +1,8 @@
-BLOQUE_02
+7#Sabrina (1995)#Comedy|Romance
+8#Tom and Huck (1995)#Adventure|Children
+9#Sudden Death (1995)#Action
+10#GoldenEye (1995)#Action|Adventure|Thriller
+11#"American President# The (1995)"#Comedy|Drama|Romance
+12#Dracula: Dead and Loving It (1995)#Comedy|Horror
+13#Balto (1995)#Adventure|Animation|Children
+14#Nixon (1995)#Drama

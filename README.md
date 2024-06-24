@@ -4,6 +4,10 @@
 
 ![Descripción de la imagen](imgs/Diagrama_BufferManager.png)
 
+- **Estructura HDD**
+
+![Descripción de la imagen](imgs/Diagrama_Control_HDD.png)
+
 - **Estructura de Manejo HDD**
 
 ![Descripción de la imagen](imgs/Diagrama_Estructura_Espacio_HDD.svg)
