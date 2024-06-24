@@ -47,6 +47,7 @@ struct Estructura_HDD
     void llenarBloque(string id, int capacidad);
     void insertarTextoABloquePorID(string texto, string id_bloque);
     void insertarTextoABloque(string texto, Espacio_HDD &Bloque);
+    void leerCSVDeRegistrosEInsertarEnBloques(string direccion_archivo,string id_bloque);
 
     void resetCapacidadesNivel_0_1_2()
     {
@@ -378,6 +379,8 @@ Espacio_HDD &Estructura_HDD::getReferenciaPrimerBloqueVacioDisponible()
             {
                 if (bloque.tipo == "BLOQUE" && bloque.capacidad_usada == 0)
                 {
+                    cout<<"\t la capacidad usada de este bloque "<<bloque.direccion<<" es "<<bloque.capacidad_usada<<endl;
+                    cout<<"\t Este es la direccion de memoria del bloque que devuelve: "<<&bloque;
                     return bloque;
                 }
             }
@@ -385,6 +388,10 @@ Espacio_HDD &Estructura_HDD::getReferenciaPrimerBloqueVacioDisponible()
     }
     return Espacio_HDD_no_encontrado;
 }
+
+
+
+//Prueba
 
 void Estructura_HDD::llenarBloque(string id, int capacidad)
 {
@@ -399,7 +406,7 @@ void Estructura_HDD::insertarTextoABloquePorID(string texto, string id_bloque)
 
 void Estructura_HDD::insertarTextoABloque(string texto, Espacio_HDD &Bloque)
 {
-    const int capacidad_disponible = Bloque.capacidad_total - Bloque.capacidad_usada;
+    const int capacidad_disponible = Bloque.capacidad_total - Bloque.capacidad_usada + 1;
     const int capacidad_a_ingresar = texto.size();
     const string direccion = Bloque.direccion;
     if (capacidad_a_ingresar > capacidad_disponible)
@@ -437,6 +444,65 @@ void Estructura_HDD::insertarTextoABloque(string texto, Espacio_HDD &Bloque)
         else
         {
             cerr << "No se pudo abrir el archivo." << endl;
+        }
+    }
+}
+
+
+inline void agregarLineaDeRegistro(string linea_de_registro,ofstream& archivo_destino,int& cantidad_caracteres_disponibles_del_bloque){
+    int tam_linea_de_registro = linea_de_registro.length();
+    if (!archivo_destino.is_open()){
+        cout<<"El archivo no se abrio en la funcion"<<endl;
+    }else{
+        archivo_destino<<linea_de_registro;
+        cantidad_caracteres_disponibles_del_bloque -= tam_linea_de_registro;
+    }
+}
+
+
+void Estructura_HDD::leerCSVDeRegistrosEInsertarEnBloques(string direccion_archivo, string id_bloque) {
+    Espacio_HDD* Bloque = &getReferenciaBloquePorID(id_bloque);
+    const string direccion_bloque = Bloque->direccion;
+    cout << "LA DIRECCION ENCONTRADA DEL BLOQUE ES: " << direccion_bloque << endl;
+
+    int cantidad_caracteres_disponibles_del_bloque = Bloque->capacidad_total - Bloque->capacidad_usada;
+
+    ifstream archivo(direccion_archivo);
+    ofstream archivo_bloque_destino(direccion_bloque, ios::app);
+
+    if (!archivo.is_open() || !archivo_bloque_destino.is_open()) {
+        cout << "No se pudo abrir alguno de los archivos." << endl;
+    } else {
+        string linea_de_registro;
+
+        while (getline(archivo, linea_de_registro)) {
+            int tam_linea_de_registro = linea_de_registro.length(); // Corrección: Asignación correcta
+            cout<<"Este bloque tiene "<<cantidad_caracteres_disponibles_del_bloque<<" dispinibles y el tamanio del registro tiene "<<tam_linea_de_registro<<endl;
+            if (cantidad_caracteres_disponibles_del_bloque >= tam_linea_de_registro) { // Corrección: Condición correcta
+                agregarLineaDeRegistro(linea_de_registro, archivo_bloque_destino, cantidad_caracteres_disponibles_del_bloque);
+                Bloque->capacidad_usada = Bloque->capacidad_total - cantidad_caracteres_disponibles_del_bloque;
+            } else {
+                //cout << "Al bloque le quedan " << cantidad_caracteres_disponibles_del_bloque << " caracteres disponibles" << endl;
+                Bloque->capacidad_usada = Bloque->capacidad_total - cantidad_caracteres_disponibles_del_bloque;
+                cout<<"\t La capacidad usada que tiene el Bloque_A es: "<<Bloque->direccion<<"---"<<Bloque->capacidad_usada<<endl;
+                cout<<"\t Este es la direccion de memoria del bloque A que devuelve: "<<&Bloque;
+                Espacio_HDD* Bloque_B = &getReferenciaPrimerBloqueVacioDisponible();
+                cout<<"\t Este es la direccion de memoria del bloque B que devuelve: "<<&Bloque_B;
+
+                enlazarBloques(*Bloque, *Bloque_B);
+
+                // Actualizar referencia y archivo destino
+                Bloque = Bloque_B;
+                archivo_bloque_destino.close();
+                archivo_bloque_destino.open(Bloque->direccion, ios::app);
+                cantidad_caracteres_disponibles_del_bloque = Bloque->capacidad_total - Bloque->capacidad_usada;
+                
+                agregarLineaDeRegistro(linea_de_registro, archivo_bloque_destino, cantidad_caracteres_disponibles_del_bloque);
+                Bloque->capacidad_usada = Bloque->capacidad_total - cantidad_caracteres_disponibles_del_bloque;
+
+            }
+
+            cout<<"Ahora la capacidad usada del bloque es "<<Bloque->capacidad_usada<<endl;
         }
     }
 }

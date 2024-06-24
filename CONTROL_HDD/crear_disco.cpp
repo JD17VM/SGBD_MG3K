@@ -19,16 +19,16 @@ int main()
     int bytes_por_bloque = 320;
     string nombre_archivo_metadata = "metadata";
     
-    /*
-    Estructura_HDD E(
+    
+    /*Estructura_HDD E(
         "HDD", 
         "PLATO", cantidad_platos, 'A', 'B', 
         "PISTA", cantidad_pistas, 
         "BLOQUE", cantidad_bloques,
         bytes_por_bloque,
         nombre_archivo_metadata
-    );
-    */
+    );*/
+    
 
     Estructura_HDD E(
         "HDD","metadata.txt",
@@ -37,9 +37,11 @@ int main()
         cantidad_bloques,
         bytes_por_bloque
     );
-    for(string texto: E.HDD.listadoDeDireccionesHijos()){
+
+    E.leerCSVDeRegistrosEInsertarEnBloques("movies.csv","HP01AP01A01");
+    /*for(string texto: E.HDD.listadoDeDireccionesHijos()){
         cout<<texto<<endl;
-    }
+    }*/
     /*E.llenarBloque("HP01AP01A02",20);
     E.crearArchivoMetadatos("metadata");
     E.llenarBloque("HP01AP01A01",34);
@@ -50,8 +52,8 @@ int main()
     E.crearArchivoMetadatos("metadata");*/
     //E.llenarBloque("HP01AP02A01",20);
 
-    //E.insertarTextoABloquePorID("Este se un texto que tiene más de 100 caracteres, es importante considerar que en este caso debería a saltar de linea. A continuacion pongo el ejemplo de un nuevo texto que tiene problemas para solucionar, espero que funque","HP01AP01A01");
-    //E.crearArchivoMetadatos("metadata");
+    /*E.insertarTextoABloquePorID("Este se un texto que tiene más de 100 caracteres, es importante considerar que en este caso debería a saltar de linea. A continuacion pongo el ejemplo de un nuevo texto que tiene problemas para solucionar, espero que funque , lo que necesita esto es funcionar de forma continua , ya habia probado con anterioridad que funcione correctamente y ahora tambien deberái funcionar sin ningun problema  ","HP01AP01A05");
+    E.crearArchivoMetadatos("metadata");*/
     
 
     /*cout << "Espacio usado: " << disco.getEspacioUsado() << endl;
