@@ -67,6 +67,10 @@ CREATE TABLE ejemplo (
 
 ![Descripción de la imagen](imgs/Ecuacion_Longitud_TD.png)
 
+### **Método Iterativo**
+
+![Descripción de la imagen](imgs/Metodo_Iterativo.png)
+
 
 ## **Políticas de Reemplazo**
 
