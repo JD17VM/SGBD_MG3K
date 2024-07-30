@@ -1,0 +1,5 @@
+Postid#int#12
+userid#int#12
+pdate#int#12
+content#char#250
+inicial#bool#6
