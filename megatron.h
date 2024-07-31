@@ -42,4 +42,16 @@ string textoCompletadoCon(string texto,char caracter, int longitud, string posic
     return texto;
 }
 
+string textoCompletadoConSinPuntosSuspensivos(string texto,char caracter, int longitud, string posicion){
+    if (longitud >= texto.length()){
+        const int espacios_por_completar = longitud - texto.length();
+        if(posicion == "derecha"){
+            texto = texto + string(espacios_por_completar,caracter);
+        }else if(posicion == "izquierda"){
+            texto = string(espacios_por_completar,caracter) + texto;
+        }
+    } 
+    return texto;
+}
+
 #endif
