@@ -1,8 +1,25 @@
-22#Copycat (1995)#Crime|Drama|Horror|Mystery|Thriller
-23#Assassins (1995)#Action|Crime|Thriller
-24#Powder (1995)#Drama|Sci-Fi
-25#Leaving Las Vegas (1995)#Drama|Romance
-26#Othello (1995)#Drama
-27#Now and Then (1995)#Children|Drama
-28#Persuasion (1995)#Drama|Romance
-Esta es una modificacion
+23,15901,31072025,Esta es una respuesta al tema n�mero 23.,0
+24,13706,31072025,Este es un nuevo tema de discusi�n n�mero 24.,1
+24,15865,31072025,Esta es una respuesta al tema n�mero 24.,0
+25,14712,31072025,Este es un nuevo tema de discusi�n n�mero 25.,1
+25,12801,31072025,Esta es una respuesta al tema n�mero 25.,0
+26,13162,31072025,Este es un nuevo tema de discusi�n n�mero 26.,1
+26,12139,31072025,Esta es una respuesta al tema n�mero 26.,0
+27,10015,31072025,Este es un nuevo tema de discusi�n n�mero 27.,1
+27,11479,31072025,Esta es una respuesta al tema n�mero 27.,0
+28,15573,31072025,Este es un nuevo tema de discusi�n n�mero 28.,1
+28,15437,31072025,Esta es una respuesta al tema n�mero 28.,0
+29,11425,31072025,Este es un nuevo tema de discusi�n n�mero 29.,1
+29,13900,31072025,Esta es una respuesta al tema n�mero 29.,0
+30,13630,31072025,Este es un nuevo tema de discusi�n n�mero 30.,1
+30,11781,31072025,Esta es una respuesta al tema n�mero 30.,0
+31,12681,31072025,Este es un nuevo tema de discusi�n n�mero 31.,1
+31,12538,31072025,Esta es una respuesta al tema n�mero 31.,0
+32,13561,31072025,Este es un nuevo tema de discusi�n n�mero 32.,1
+32,15424,31072025,Esta es una respuesta al tema n�mero 32.,0
+33,13793,31072025,Este es un nuevo tema de discusi�n n�mero 33.,1
+33,12952,31072025,Esta es una respuesta al tema n�mero 33.,0
+34,14917,31072025,Este es un nuevo tema de discusi�n n�mero 34.,1
+34,11840,31072025,Esta es una respuesta al tema n�mero 34.,0
+35,13170,31072025,Este es un nuevo tema de discusi�n n�mero 35.,1
+35,14325,31072025,Esta es una respuesta al tema n�mero 35.,0

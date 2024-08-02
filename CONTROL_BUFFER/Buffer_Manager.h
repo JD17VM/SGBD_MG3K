@@ -84,12 +84,12 @@ int Buffer_Manager::posicionFramePorDireccionBloque(string direccion_bloque)
     {
         if (frame.bloque != nullptr)
         {
-            cout << "Direccion bloque comprobar: " << frame.bloque->direccion_bloque << endl;
+            /*cout << "Direccion bloque comprobar: " << frame.bloque->direccion_bloque << endl;
             cout << "Pagina bloque comprobar: " << direccion_bloque << endl
-                 << endl;
+                 << endl;*/
             if (frame.bloque->direccion_bloque == direccion_bloque)
             {
-                cout << "QUE PASA: " << i;
+                //cout << "QUE PASA: " << i;
                 return i;
             }
         }
@@ -419,7 +419,7 @@ void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
         {
             Buffer_Pool[pos].setDirty(true);
         }*/
-        cout << "Bloque ya existe en el buffer: " << direccion_bloque << endl;
+        //cout << "Bloque ya existe en el buffer: " << direccion_bloque << endl;
     }
     else
     {

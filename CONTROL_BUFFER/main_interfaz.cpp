@@ -6,9 +6,11 @@
 #include <algorithm>
 #include <cstdlib>
 #include <conio.h> // Para getch() en Windows
+#include "bplusFinal.h"
 
 
 #include "Buffer_Manager.h"
+#include "Busqueda_Registro.h"
 
 using namespace std;
 
@@ -25,6 +27,10 @@ void mostrarMenuInicial(){
     cout << "1. Llamar a Bloque" << endl;
     cout << "2. Flush Frame" << endl;
     cout << "3. Unpin Frame" << endl;
+    cout << "4. Busqueda por PostID" << endl;
+    cout << "5. Insertar nuevo registro" << endl;
+    cout << "6. Eliminar registro" << endl;
+    cout << "7. Buscar por rango" << endl;
     cout << "0. Salir" << endl;
     cout << "==================" << endl;
 }
@@ -71,6 +77,110 @@ void mostrarMenuBloques() {
     cout << "0. Salir" << endl;
     cout << "========================" << endl;
 }
+
+
+void appendToFile(const string& filename, const string& text) {
+    // Abrir el archivo en modo append
+    ofstream file;
+    file.open(filename, ios::app);
+
+    if (file.is_open()) {
+        file << text << endl; // Añadir el texto al final del archivo
+        file.close(); // Cerrar el archivo después de escribir
+        cout << "Texto añadido correctamente." << endl;
+    } else {
+        cerr << "No se pudo abrir el archivo para escritura." << endl;
+    }
+}
+
+// Función para eliminar registros según la columna y el valor
+void removeLine(const string &filePath, int lineNum) {
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        cerr << "Error al abrir el archivo." << endl;
+        return;
+    }
+
+    string tempFilePath = filePath + ".tmp";
+    ofstream tempFile(tempFilePath);
+    if (!tempFile.is_open()) {
+        cerr << "Error al crear el archivo temporal." << endl;
+        return;
+    }
+
+    string line;
+    int currentLineNum = 1; // Contador de líneas
+    
+    // Leer el archivo original y escribir en el archivo temporal
+    while (getline(file, line)) {
+        if (currentLineNum != lineNum) {
+            // Escribir la línea en el archivo temporal si no es la línea a eliminar
+            tempFile << line << endl;
+        }
+        currentLineNum++;
+    }
+
+    file.close();
+    tempFile.close();
+
+    // Remplazar el archivo original con el archivo temporal
+    if (remove(filePath.c_str()) != 0) {
+        cerr << "Error al eliminar el archivo original." << endl;
+    } else if (rename(tempFilePath.c_str(), filePath.c_str()) != 0) {
+        cerr << "Error al renombrar el archivo temporal." << endl;
+    }
+}
+
+vector<vector<string>> searchAndPrintRecordsRango(const string &filePath, const string &key, const string &inicioRango, const string &finRango) {
+    ifstream file(filePath);
+    vector<vector<string>> resultados;
+    string linea;
+
+    if (!file.is_open()) {
+        cerr << "Error al abrir el archivo: " << filePath << endl;
+        return resultados;
+    }
+
+    while (getline(file, linea)) {
+        vector<string> elementos = split(linea, ','); // Asumiendo que los elementos están separados por comas
+
+        if (elementos.size() > 0 && elementos[0] >= inicioRango && elementos[0] <= finRango) {
+            resultados.push_back(elementos);
+        }
+    }
+
+    file.close();
+    return resultados;
+}
+
+vector<vector<string>> searchAndPrintRecordsRango2(const string &filePath, const string &key, const string &inicioRango, const string &finRango) {
+    ifstream file(filePath);
+    vector<vector<string>> resultados;
+    string linea;
+    
+    int inicio = stoi(inicioRango);
+    int fin = stoi(finRango);
+
+    if (!file.is_open()) {
+        cerr << "Error al abrir el archivo: " << filePath << endl;
+        return resultados;
+    }
+
+    while (getline(file, linea)) {
+        vector<string> elementos = split(linea, ','); // Asumiendo que los elementos están separados por comas
+
+        if (elementos.size() > 0) {
+            int postId = stoi(elementos[0]);
+            if (postId >= inicio && postId <= fin) {
+                resultados.push_back(elementos);
+            }
+        }
+    }
+
+    file.close();
+    return resultados;
+}
+
 
 int main(){
     Buffer_Manager p(5);
@@ -183,6 +293,169 @@ int main(){
                 }
                 break;
             }
+
+            case 4:{
+                bool subMenuSalir = false;
+                while(!subMenuSalir) {
+                    limpiarPantalla();
+                    p.imprimirEstado();
+
+                    string opcionLW;
+                    cout << "Escribrir PostID: ";
+                    cin >> opcionLW;
+
+                    if (opcionLW == "x") {
+                        subMenuSalir = true;
+                        continue;
+                    }
+
+
+                    limpiarPantalla();
+                    p.imprimirEstado();
+
+                    vector<vector<string>> resultados = searchAndPrintRecords("Bloques/BLOQUE_08.txt","Postid",opcionLW);
+
+                    for (const auto &linea : resultados) {
+                        if (linea.size() >= 3) { // Verificar que hay suficientes elementos
+                            /*cout << "Se llamara al bloque: " << linea[1] << endl;
+                            cout << "En la linea: " << linea[2] << endl << endl;*/
+                            p.llamarABloque("Bloques/"+linea[1], 'L');
+                            mostrarRegistro("Bloques/"+linea[1],stoi(linea[2]));
+                        } else {
+                            cerr << "Error: Registro incompleto" << endl;
+                        }
+                    }
+                    
+                    esperarTecla();
+                    limpiarPantalla();
+                    mostrarMenuBloques();
+                }
+                break;
+            }
+
+
+            case 5:{
+                bool subMenuSalir = false;
+                while(!subMenuSalir) {
+                    limpiarPantalla();
+                    p.imprimirEstado();
+
+                    string opcionLW;
+                    cout << "Escribrir Registro: "; //38,13419,31072025,Este es un nuevo tema de discusi�n n�mero 38.,1
+                    cin >> opcionLW;
+
+
+                    if (opcionLW == "x") {
+                        subMenuSalir = true;
+                        continue;
+                    }
+
+                    limpiarPantalla();
+                    p.imprimirEstado();
+
+                    
+                    p.llamarABloque("Bloques/BLOQUE_06.txt", 'W');
+                    int posicion = p.posicionFramePorDireccionBloque("Bloques/BLOQUE_06.txt");
+                    string direccion_frame = p.Buffer_Pool[posicion].direccion_frame;
+                    appendToFile(direccion_frame,opcionLW);
+                    appendToFile("updated_posts.csv",opcionLW);
+                    BPTree<int> tree(4);
+                    cargarCSVenBTree("updated_posts.csv","Postid",tree);
+                    guardarArbolEnDOT(tree, "arbol.txt");
+                    
+                    esperarTecla();
+                    limpiarPantalla();
+                    mostrarMenuBloques();
+                }
+                break;
+            }
+
+            case 6:{
+                bool subMenuSalir = false;
+                while(!subMenuSalir) {
+                    limpiarPantalla();
+                    p.imprimirEstado();
+
+                    string opcionLW;
+                    cout << "Post Id de registro a eliminar: "; //38,13419,31072025,Este es un nuevo tema de discusi�n n�mero 38.,1
+                    cin >> opcionLW;
+
+
+                    if (opcionLW == "x") {
+                        subMenuSalir = true;
+                        continue;
+                    }
+
+                    limpiarPantalla();
+                    p.imprimirEstado();
+
+
+                    vector<vector<string>> resultados = searchAndPrintRecords("Bloques/BLOQUE_08.txt","Postid",opcionLW);
+
+                    for (const auto &linea : resultados) {
+                        if (linea.size() >= 3) { // Verificar que hay suficientes elementos
+                            /*cout << "Se llamara al bloque: " << linea[1] << endl;
+                            cout << "En la linea: " << linea[2] << endl << endl;*/
+                            string dir_bloque = "Bloques/"+linea[1];
+                            p.llamarABloque(dir_bloque, 'W');
+                            mostrarRegistro(dir_bloque,stoi(linea[2]));
+                            int posicion = p.posicionFramePorDireccionBloque(dir_bloque);
+                            string direccion_frame = p.Buffer_Pool[posicion].direccion_frame;
+                            removeLine(direccion_frame,stoi(linea[2]));
+                        } else {
+                            cerr << "Error: Registro incompleto" << endl;
+                        }
+                    }
+
+                    esperarTecla();
+                    limpiarPantalla();
+                    mostrarMenuBloques();
+                }
+                break;
+            }
+
+            case 7: {
+                bool subMenuSalir = false;
+                while(!subMenuSalir) {
+                    limpiarPantalla();
+                    p.imprimirEstado();
+
+                    string inicioRango, finRango;
+                    cout << "Escribrir PostID de inicio: ";
+                    cin >> inicioRango;
+                    
+                    cout << "Escribrir PostID de fin: ";
+                    cin >> finRango;
+
+                    if (inicioRango == "x" || finRango == "x") {
+                        subMenuSalir = true;
+                        continue;
+                    }
+
+                    limpiarPantalla();
+                    p.imprimirEstado();
+
+                    // Supongamos que searchAndPrintRecords puede aceptar un rango
+                    vector<vector<string>> resultados = searchAndPrintRecordsRango("Bloques/BLOQUE_08.txt", "Postid", inicioRango, finRango);
+
+                    for (const auto &linea : resultados) {
+                        if (linea.size() >= 3) { // Verificar que hay suficientes elementos
+                            /*cout << "Se llamara al bloque: " << linea[1] << endl;
+                            cout << "En la linea: " << linea[2] << endl << endl;*/
+                            p.llamarABloque("Bloques/"+linea[1], 'L');
+                            mostrarRegistro("Bloques/"+linea[1], stoi(linea[2]));
+                        } else {
+                            cerr << "Error: Registro incompleto" << endl;
+                        }
+                    }
+
+                    esperarTecla();
+                    limpiarPantalla();
+                    mostrarMenuBloques();
+                }
+                break;
+            }
+  
 
             case 0:
                 salir = true;

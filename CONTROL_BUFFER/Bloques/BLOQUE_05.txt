@@ -1,5 +1,25 @@
-29#"City of Lost Children# The (Cité des enfants perdus# La) (1995)"#Adventure|Drama|Fantasy|Mystery|Sci-Fi
-30#Shanghai Triad (Yao a yao yao dao waipo qiao) (1995)#Crime|Drama
-31#Dangerous Minds (1995)#Drama
-32#Twelve Monkeys (a.k.a. 12 Monkeys) (1995)#Mystery|Sci-Fi|Thriller
-34#Babe (1995)#Children|Drama
+36,13393,31072025,Este es un nuevo tema de discusi�n n�mero 36.,1
+36,10554,31072025,Esta es una respuesta al tema n�mero 36.,0
+37,14345,31072025,Este es un nuevo tema de discusi�n n�mero 37.,1
+37,10234,31072025,Esta es una respuesta al tema n�mero 37.,0
+38,13419,31072025,Este es un nuevo tema de discusi�n n�mero 38.,1
+38,14365,31072025,Esta es una respuesta al tema n�mero 38.,0
+39,10311,31072025,Este es un nuevo tema de discusi�n n�mero 39.,1
+39,14073,31072025,Esta es una respuesta al tema n�mero 39.,0
+40,12498,31072025,Este es un nuevo tema de discusi�n n�mero 40.,1
+40,14170,31072025,Esta es una respuesta al tema n�mero 40.,0
+41,14296,31072025,Este es un nuevo tema de discusi�n n�mero 41.,1
+41,12298,31072025,Esta es una respuesta al tema n�mero 41.,0
+42,10265,31072025,Este es un nuevo tema de discusi�n n�mero 42.,1
+42,11095,31072025,Esta es una respuesta al tema n�mero 42.,0
+43,13874,31072025,Este es un nuevo tema de discusi�n n�mero 43.,1
+43,14822,31072025,Esta es una respuesta al tema n�mero 43.,0
+44,13274,31072025,Este es un nuevo tema de discusi�n n�mero 44.,1
+44,11780,31072025,Esta es una respuesta al tema n�mero 44.,0
+45,13085,31072025,Este es un nuevo tema de discusi�n n�mero 45.,1
+45,13173,31072025,Esta es una respuesta al tema n�mero 45.,0
+46,13621,31072025,Este es un nuevo tema de discusi�n n�mero 46.,1
+46,14958,31072025,Esta es una respuesta al tema n�mero 46.,0
+47,14445,31072025,Este es un nuevo tema de discusi�n n�mero 47.,1
+47,15526,31072025,Esta es una respuesta al tema n�mero 47.,0
+48,15904,31072025,Este es un nuevo tema de discusi�n n�mero 48.,1

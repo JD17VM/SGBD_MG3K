@@ -1,0 +1,25 @@
+1,11150,28072024,"Hola a todos, �qu� opinan sobre la sostenibilidad en la moda? �Espero sus comentarios!",1
+1,11000,28072024,Es una gran iniciativa.,0
+2,12150,28072024,Que opinan de los videojuegos??,1
+1,10050,28072024,La moda sostenible es el futuro.,0
+1,10150,28072024,Importante para el medio ambiente.,0
+2,16000,28072024,Me gustan los videojuegos,0
+3,11000,29072024,�De que paises son ?,1
+1,15000,29072024,Siempre compro ropa de segunda mano.,0
+1,10880,29072024,Todos debemos ser m�s conscientes.,0
+1,10045,30072024,La moda sostenible puede ser muy estilosa.,0
+3,12540,30072024,"Hola, soy de Colombia",0
+4,16000,30082024,"Hola a todos, estoy buscando recomendaciones de buenos libros para leer este verano. �Cu�les son sus favoritos?",1
+5,13200,30082024,�Alguien m�s ha probado el nuevo framework de JavaScript? Me parece incre�ble c�mo mejora el rendimiento de nuestras aplicaciones web,1
+5,11000,30082024,"S�, lo he estado usando en mi �ltimo proyecto y realmente hace una diferencia en la velocidad de carga.",0
+4,11000,30082024,"Me encant� ""Cien a�os de soledad"" de Gabriel Garc�a M�rquez.",0
+4,11500,30082024,"Te recomiendo ""1984"" de George Orwell, es un cl�sico.",0
+2,13421,31072024,Son aburridos,0
+2,17000,31072024,Vendo videojuegos,0
+5,13421,31072024,"Todav�a no lo he probado, pero he escuchado muy buenas cr�ticas. �Crees que vale la pena migrar un proyecto existente?",0
+3,11234,31072024,"Hola, soy de Colombia, saludos",0
+3,11000,31072024,Yo soy de Per�,0
+4,11020,31072024,"""El Alquimista"" de Paulo Coelho es una lectura inspiradora.",0
+4,11000,31072024,"""Orgullo y prejuicio"" de Jane Austen es uno de mis favoritos.",0
+6,11000,1082024,Estoy pensando en adoptar una mascota. �Qu� tipo de mascota me recomendar�an y por qu�?,1
+2,13421,1082024,"Son muy divertidos, los juego desde hace mucho.",0

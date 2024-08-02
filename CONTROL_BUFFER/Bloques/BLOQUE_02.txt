@@ -1,8 +1,25 @@
-7#Sabrina (1995)#Comedy|Romance
-8#Tom and Huck (1995)#Adventure|Children
-9#Sudden Death (1995)#Action
-10#GoldenEye (1995)#Action|Adventure|Thriller
-11#"American President# The (1995)"#Comedy|Drama|Romance
-12#Dracula: Dead and Loving It (1995)#Comedy|Horror
-13#Balto (1995)#Adventure|Animation|Children
-14#Nixon (1995)#Drama
+4,15000,1082024,"Si te gusta la fantas�a, ""El nombre del viento"" de Patrick Rothfuss es genial.",0
+4,11150,2082024,"""Los pilares de la tierra"" de Ken Follett es una lectura �pica.",0
+4,10034,2082024,"Disfrut� mucho ""La sombra del viento"" de Carlos Ruiz Zaf�n.",0
+5,11500,4082024,Lo prob� la semana pasada y estoy impresionado con la facilidad de uso. �Has encontrado alg�n inconveniente?,0
+5,11020,4082024,Estoy interesado en aprender m�s sobre �l. �D�nde encontraste los mejores recursos para empezar?,0
+7,11234,4082024,Acabo de terminar de ver la serie 'Dark' y mi mente est� alucinada. �El guion y la trama son una obra maestra! �Qu� opinan ustedes?,1
+7,13650,4082024,"Totalmente de acuerdo, cada temporada fue mejor que la anterior. El final me dej� sin palabras. �Qui�n fue tu personaje favorito?",0
+6,10150,4082024,Un perro es una excelente compa��a y muy leal.,0
+8,13652,8082024,"�Acabo de regresar de un viaje a Jap�n y fue incre�ble! Desde la tecnolog�a avanzada hasta los templos antiguos, todo fue fascinante. �Cu�l ha sido su experiencia favorita en Jap�n?",1
+7,13652,8082024,La complejidad de los viajes en el tiempo y c�mo todo encaja al final es brillante. Me encant� c�mo cada detalle ten�a un prop�sito.,0
+7,10703,8082024,�La cinematograf�a y la banda sonora fueron impresionantes! Me hizo reflexionar sobre la naturaleza del tiempo y las decisiones humanas. �Te gustar�a ver una continuaci�n o un spin-off?,0
+9,14590,8082024,�Hola! Mi cumplea�os est� cerca y estoy buscando ideas para celebrarlo. �Qu� actividades o fiestas han sido las m�s divertidas para ustedes?,1
+6,16000,8082024,Los gatos son independientes y muy cari�osos.,0
+6,11000,9082024,Adoptar un conejo puede ser muy gratificante; son adorables y tranquilos.,0
+8,14590,9082024,Me encant� la mezcla de modernidad y tradici�n en Tokio. Asistir a un festival local fue inolvidable. �Probaste alg�n platillo �nico?,0
+8,11000,9082024,"Tuve la oportunidad de escalar el Monte Fuji. Fue agotador, pero la vista desde la cima vali� la pena. �Visitaste alguna fuente termal?",0
+9,10703,12082024,Organizar una cena con amigos en tu restaurante favorito es una excelente opci�n.,0
+9,11000,16082024,Una noche de juegos con familiares y amigos puede ser muy entretenida.,0
+6,15000,16082024,Los peces son f�ciles de cuidar y pueden ser muy relajantes.,0
+6,18001,2092024,Los p�jaros pueden ser muy entretenidos y algunos hasta aprenden a hablar.,0
+6,13500,2092024,Un h�mster es una buena opci�n si buscas una mascota peque�a y divertida.,0
+6,10111,3092024,Considera adoptar una mascota del refugio; hay muchos animales que necesitan un hogar.,0
+8,10703,3092025,�Jap�n es incre�ble! Mi parte favorita fue explorar Kyoto y visitar todos los templos. La serenidad y la historia del lugar son incomparables,0
+9,15000,5092026,"Si te gusta la aventura, una escapada de fin de semana puede ser genial",0
+10,10150,5092027,Me encantar�a escuchar algunas de sus an�cdotas m�s divertidas o interesantes. �Tienen alguna historia que les gustar�a compartir?,1
