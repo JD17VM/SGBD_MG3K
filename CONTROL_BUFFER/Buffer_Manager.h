@@ -188,8 +188,6 @@ string Buffer_Manager::comprobarEstadoDeTodosLosFrames()
     return "L";
 }
 
-
-
 int Buffer_Manager::posicionRecientementeMenosUsadoLRUMasOtrasEvaluaciones()
 {
     int min_last_used_count = INT_MAX;
@@ -312,7 +310,6 @@ int Buffer_Manager::posicionRecientementeMasUsadoMRUMasOtrasEvaluaciones()
 
     return posicion;
 }
-
 
 int Buffer_Manager::posicionPrimerFrameNoPinneadoClock()
 {
@@ -446,7 +443,7 @@ void Buffer_Manager::llamarABloque(string direccion_bloque, char indicadorLW)
         }
         else
         {
-            int pos = posicionPrimerFrameNoPinneadoClock(); // Encontrar el frame menos recientemente usado con pin_count 0
+            int pos = posicionRecientementeMenosUsadoLRUMasOtrasEvaluaciones(); // Encontrar el frame menos recientemente usado con pin_count 0
             if (pos != -1)
             {
                 Buffer_Pool[pos].resetearFrame();

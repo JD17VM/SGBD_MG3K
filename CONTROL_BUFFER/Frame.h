@@ -100,6 +100,41 @@ struct Frame{
         }
     }*/
 
+
+    void reemplazarContenidoDeArchivoTXTEnOtro(const string& sourceFileName, const string& destinationFileName) {
+        // Nombre temporal para la copia del archivo
+        string tempFileName = "temp.txt";
+
+        // Copiar el contenido de sourceFileName a tempFileName
+        ifstream sourceFile(sourceFileName, ios::binary);
+        ofstream tempFile(tempFileName, ios::binary);
+        if (!sourceFile) {
+            cerr << "No se pudo abrir el archivo de entrada: " << sourceFileName << endl;
+            return;
+        }
+        if (!tempFile) {
+            cerr << "No se pudo crear el archivo temporal: " << tempFileName << endl;
+            return;
+        }
+        tempFile << sourceFile.rdbuf();
+        sourceFile.close();
+        tempFile.close();
+
+        // Eliminar el archivo destino original
+        if (remove(destinationFileName.c_str()) != 0) {
+            cerr << "Error al eliminar el archivo: " << destinationFileName << endl;
+            return;
+        }
+
+        // Renombrar el archivo temporal al nombre del archivo destino
+        if (rename(tempFileName.c_str(), destinationFileName.c_str()) != 0) {
+            cerr << "Error al renombrar el archivo: " << tempFileName << " a " << destinationFileName << endl;
+            return;
+        }
+
+        cout << "El contenido del archivo " << sourceFileName << " ha reemplazado a " << destinationFileName << endl;
+    }
+
     void setBloque(shared_ptr<Bloque> bloque){
         this->bloque = bloque;
         cout<<"Frame: "<<this->direccion_frame<<endl;
@@ -125,10 +160,12 @@ struct Frame{
         this->lastUsedCount = n;
     }
     
+
+
     void flushing(){
         if(this->dirty){
             setDirty(false);
-            //copiar texto de Frame sobre Bloque
+            reemplazarContenidoDeArchivoTXTEnOtro(this->direccion_frame,this->bloque->direccion_bloque);
         }
     }
 

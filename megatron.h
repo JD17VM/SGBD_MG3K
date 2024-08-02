@@ -1,6 +1,8 @@
 #ifndef MEGATRON_H
 #define MEGATRON_H
 
+#include <cmath>
+
 using namespace std;
 
 string completarNumeroConCeros(int numero, int longitud)
@@ -52,6 +54,28 @@ string textoCompletadoConSinPuntosSuspensivos(string texto,char caracter, int lo
         }
     } 
     return texto;
+}
+
+
+vector<string> split(const string &str, char delimiter) {
+    vector<string> tokens;
+    string token;
+    for (char ch : str) {
+        if (ch == delimiter) {
+            tokens.push_back(token);  // Añadir el token actual al vector
+            token.clear();  // Limpiar el token
+        } else {
+            token += ch;  // Añadir el carácter actual al token
+        }
+    }
+    // Añadir el último token
+    tokens.push_back(token);
+    return tokens;
+}
+
+int contador_digitos(int num) {
+    if (num == 0) return 1;
+    return log10(num) + 1;
 }
 
 #endif
